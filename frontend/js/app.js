@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('esn.helloworld', [
+angular.module('linagora.esn.cryptpad', [
   'op.dynamicDirective',
   'ui.router'
 ])
@@ -8,14 +8,19 @@ angular.module('esn.helloworld', [
   '$stateProvider',
   'dynamicDirectiveServiceProvider',
   function($stateProvider, dynamicDirectiveServiceProvider) {
-    var helloworld = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'application-menu-hello-world', {priority: 28});
+    var helloworld = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'application-menu-cryptpad', {priority: 28});
     dynamicDirectiveServiceProvider.addInjection('esn-application-menu', helloworld);
 
     $stateProvider
-      .state('helloworld', {
-        url: '/helloworld',
-        templateUrl: '/helloworld/views/index.html',
-        controller: 'helloWorldController'
+      .state('cryptpad', {
+        url: '/cryptpad',
+        templateUrl: '/cryptpad/pad/index.html',
+        controller: 'cryptpadController'
+      })
+      .state('editCryptpad', {
+        url: '/cryptpad/:version/:form/:channel/:doc',
+        templateUrl: '/cryptpad/pad/index.html',
+        controller: 'cryptpadController'
       });
   }
 ]);
