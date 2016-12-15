@@ -1,4 +1,5 @@
-require.config({ paths: { 'json.sortify': '/bower_components/json.sortify/dist/JSON.sortify' } });
+require.config({ paths: { 'json.sortify': '/bower_components/json.sortify/dist/JSON.sortify',
+                          'config': '/cryptpad/config/config' }});
 define([
     '/cryptpad/customize.dist/messages.js?app=pad',
     '/bower_components/chainpad-crypto/crypto.js',
@@ -7,11 +8,12 @@ define([
     '/cryptpad/common/cursor.js',
     '/bower_components/chainpad-json-validator/json-ot.js',
     'json.sortify',
+    'config',
     '/bower_components/textpatcher/TextPatcher.amd.js',
     '/cryptpad/common/common.js',
     '/bower_components/diff-dom/diffDOM.js',
     '/bower_components/jquery/dist/jquery.min.js',
-], function (Messages, Crypto, realtimeInput, Hyperjson, Cursor, JsonOT, JSONSortify, TextPatcher, Common) {
+], function (Messages, Crypto, realtimeInput, Hyperjson, Cursor, JsonOT, JSONSortify, config, TextPatcher, Common) {
     var $ = window.jQuery;
     var ifrw = $('#pad-iframe')[0].contentWindow;
     var Ckeditor; // to be initialized later...
@@ -252,7 +254,7 @@ define([
                 initialState: stringifyDOM(inner) || '{}',
 
                 // the websocket URL
-                websocketURL: Common.getWebsocketURL(),
+                websocketURL: Common.getWebsocketURL(config.websocketPort, config.websocketPath),
 
                 // the channel we will communicate over
                 channel: secret.channel,

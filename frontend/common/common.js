@@ -9,14 +9,15 @@ define([
 
     Additionally, there is some basic functionality for import/export.
 */
+
     var $ = window.jQuery;
 
     var common = {
         Messages: Messages,
     };
 
-    var getWebsocketURL = common.getWebsocketURL = function () {
-      return 'ws://' + location.hostname + ':3000/cryptpad_websocket';
+    var getWebsocketURL = common.getWebsocketURL = function (port, path) {
+      return 'ws://' + location.hostname + ':'+ port + path;
     };
 
     var isArray = function (o) { return Object.prototype.toString.call(o) === '[object Array]'; };

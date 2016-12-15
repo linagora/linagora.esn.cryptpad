@@ -1,8 +1,8 @@
 'use strict';
-
 var AwesomeModule = require('awesome-module');
 var Dependency = AwesomeModule.AwesomeModuleDependency;
 var path = require('path');
+const Config = require('./frontend/config/config');
 
 var cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
   dependencies: [
@@ -59,7 +59,7 @@ var cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
     },
 
     start: function(dependencies, callback) {
-      require('./backend/ws').init(dependencies, this.lib);
+      require('./backend/ws').init(dependencies, this.lib, Config);
     }
   }
 });

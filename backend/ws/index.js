@@ -1,27 +1,22 @@
 'use strict';
 
+var NetfluxSrv = require('./NetfluxWebsocketSrv');
+const WebSocketServer = require('ws').Server;
 let initialized = false;
-let cryptpadNamespace;
 
-function init(dependencies, lib) {
-  const logger = dependencies('logger');
-  const io = dependencies('wsserver').io;
-  const helper = dependencies('wsserver').ioHelper;
-  const pubsub = dependencies('pubsub');
-  const localPubsub = pubsub.local;
-  const globalPubsub = pubsub.global;
+function init(dependencies, lib, config) {
+  var Storage = require(config.storage);
 
   if (initialized) {
-    return logger.warn('The chat notification service is already initialized');
+    return logger.warn('The cryptpad service is already initialized');
   }
 
-  cryptpadNamespace = io.of('/cryptpad');
-  cryptpadNamespace.on('connection', socket => {
-    const userId = helper.getUserId(socket);
-
-    logger.info('New connection on /cryptpad by user %s', userId);
-    initialized = true;
+  let wss = new WebSocketServer({port: config.websocketPort});
+  initialized = true;
+  Storage.create(config, storage => {
+    NetfluxSrv.run(storage, wss, config);
   });
+
 }
 
 module.exports.init = init;
