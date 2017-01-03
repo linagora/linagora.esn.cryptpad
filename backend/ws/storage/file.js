@@ -173,6 +173,7 @@ var getChannel = function (env, id, callback) {
 };
 
 var message = function (env, chanName, msg, cb) {
+
     getChannel(env, chanName, function (err, chan) {
         if (err) {
             cb(err);
@@ -216,41 +217,48 @@ var getMessages = function (env, chanName, handler, cb) {
     });
 };
 
-module.exports.create = function (conf, cb) {
-    var env = {
-        root: conf.filePath || './datastore',
-        channels: { },
-        channelExpirationMs: conf.channelExpirationMs || 30000,
-        verbose: conf.verbose,
-        openFiles: 0,
-        openFileLimit: conf.openFileLimit || 2048,
-    };
-    Fs.mkdir(env.root, function (err) {
-        if (err && err.code !== 'EEXIST') {
-            // TODO: somehow return a nice error
-            throw err;
-        }
-        cb({
-            message: function (channelName, content, cb) {
-                message(env, channelName, content, cb);
-            },
-            getMessages: function (channelName, msgHandler, cb) {
-                getMessages(env, channelName, msgHandler, cb);
-            },
-            removeChannel: function (channelName, cb) {
-                removeChannel(env, channelName, function (err) {
-                    cb(err);
-                });
-            },
-            closeChannel: function (channelName, cb) {
-                closeChannel(env, channelName, cb);
-            },
-            flushUnusedChannels: function (cb) {
-                flushUnusedChannels(env, cb);
-            },
-        });
-    });
-    setInterval(function () {
-        flushUnusedChannels(env, function () { });
-    }, 5000);
-};
+
+module.exports = function(dependencies) {
+  var create = function (conf, cb) {
+      var env = {
+          root: conf.filePath || './datastore',
+          channels: { },
+          channelExpirationMs: conf.channelExpirationMs || 30000,
+          verbose: conf.verbose,
+          openFiles: 0,
+          openFileLimit: conf.openFileLimit || 2048,
+      };
+      Fs.mkdir(env.root, function (err) {
+          if (err && err.code !== 'EEXIST') {
+              // TODO: somehow return a nice error
+              throw err;
+          }
+          cb({
+              message: function (channelName, content, cb) {
+                  message(env, channelName, content, cb);
+              },
+              getMessages: function (channelName, msgHandler, cb) {
+                  getMessages(env, channelName, msgHandler, cb);
+              },
+              removeChannel: function (channelName, cb) {
+                  removeChannel(env, channelName, function (err) {
+                      cb(err);
+                  });
+              },
+              closeChannel: function (channelName, cb) {
+                  closeChannel(env, channelName, cb);
+              },
+              flushUnusedChannels: function (cb) {
+                  flushUnusedChannels(env, cb);
+              },
+          });
+      });
+      setInterval(function () {
+          flushUnusedChannels(env, function () { });
+      }, 5000);
+  };
+
+  return{
+    create
+  };
+}
