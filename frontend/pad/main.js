@@ -16,6 +16,7 @@ define([
 ], function (Messages, Crypto, realtimeInput, Hyperjson, Cursor, JsonOT, JSONSortify, config, TextPatcher, Common) {
     var $ = window.jQuery;
     var ifrw = $('#pad-iframe')[0].contentWindow;
+    var userId = $('#userToken')[0].value;
     var Ckeditor; // to be initialized later...
     var DiffDom = window.diffDOM;
 
@@ -254,7 +255,7 @@ define([
                 initialState: stringifyDOM(inner) || '{}',
 
                 // the websocket URL
-                websocketURL: Common.getWebsocketURL(config.websocketPort, config.websocketPath),
+                websocketURL: Common.getWebsocketURL(config.websocketPort, config.websocketPath, userId),
 
                 // the channel we will communicate over
                 channel: secret.channel,

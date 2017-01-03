@@ -16,7 +16,7 @@
 
     "verbose": false,
 
-    "storage": "./storage/file",
+    "storage": "./storage/mongo",
 
     "filePath": "./datastore/",
 

@@ -1,5 +1,5 @@
 define([
-    'cryptpad/customize.dist/messages.js',
+    '/customize.dist/messages.js',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages, Crypto) {
@@ -16,8 +16,8 @@ define([
         Messages: Messages,
     };
 
-    var getWebsocketURL = common.getWebsocketURL = function (port, path) {
-      return 'ws://' + location.hostname + ':'+ port + path;
+    var getWebsocketURL = common.getWebsocketURL = function (port, path, userId) {
+      return 'ws://' + location.hostname + ':'+ port + path + '/' + userId;
     };
 
     var isArray = function (o) { return Object.prototype.toString.call(o) === '[object Array]'; };
