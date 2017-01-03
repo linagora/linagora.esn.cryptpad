@@ -24,7 +24,7 @@ var cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
   states: {
     lib: function(dependencies, callback) {
       var cryptpadlib = require('./backend/lib')(dependencies);
-      var cryptpad = require('./backend/webserver/api/cryptpad')(dependencies);
+      var cryptpad = require('./backend/webserver/api')(dependencies);
 
       var lib = {
         api: {
