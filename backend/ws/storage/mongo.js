@@ -1,5 +1,7 @@
-var lib, logger;
+var
+logger;
 const Nacl = require('tweetnacl');
+var self = this;
 
 var removeChannel = function (channelName, cb) {
     //fetch close channel
@@ -13,19 +15,21 @@ var flushUnusedChannels = function (cb, frame) {
 
 };
 
-var createChannel = function(env, channelId, cb) {
-  var chan = env.channels[channelId] = {
-    cryptpadId: channelId,
+var createChannel = function(env, channId, user, cb) {
+  var chan = env.channels[channId] = {
+    channel: channId,
+    author: user,
     name: 'test',
-    messages: []
-  }
+    messages: [],
+    coAuthor: []
+  };
 
-  lib.create(chan, cb);
+  self.lib.pad.create(chan, cb);
 }
 
-var getChannel = function (env, id, callback) {
-  if (env.channels[id]) {
-      var chan = env.channels[id];
+var getChannel = function (env, chanId, user, callback) {
+  if (env.channels[chanId]) {
+      var chan = env.channels[chanId];
       chan.atime = +new Date();
       if (chan.whenLoaded) {
           chan.whenLoaded.push(callback);
@@ -35,20 +39,20 @@ var getChannel = function (env, id, callback) {
       return;
   }
 
-  lib.get(id, function(err, chan) {
-    if(err) {
+  self.lib.pad.getPadById(chanId, function(err, chan) {
+    if (err) {
       logger.error('Errror while getting cryptpad channel', err);
       callback(err, null)
     }
 
     if (chan) {
-      env.channels[id] = chan;
+      env.channels[chanId] = chan;
       callback(null, chan)
     }
 
-    if (!err && !chan) {
-      createChannel(env, id, function(err, chan) {
-        if(err) {
+    if (!err && !chan && user) {
+      createChannel(env, chanId, user, function(err, chan) {
+        if (err) {
           callback(err, null);
         } else {
           callback(null, chan);
@@ -58,23 +62,43 @@ var getChannel = function (env, id, callback) {
   });
 };
 
-var message = function (env, chanName, msg, cb) {
-  getChannel(env, chanName, function(err, chan) {
-    if(err) {
+var message = function (env, chanId, msg, cb) {
+  getChannel(env, chanId, null, function(err, chan) {
+    if (err) {
       return cb(err);
     } else {
-      lib.insertMessage(chanName, msg, function(err, doc) {
-        if(err) {
+      if (msg.validateKey && msg.channel) {
+        self.lib.pad.insertValidateKey(msg.validateKey, msg.channel, function(err, chan) {
+          if (err) {
+            cb(err);
+          } else {
+            cb(null);
+          }
+        })
+      } else {
+        if ((!chan.coAuthor.includes(msg[1])) && (chan.author !=  msg[1])) {
+          logger.info(msg[1] + " start coAuthor on pads : " + chanId);
+          self.lib.insertCoAuthor(msg[1], chanId, function(err, doc) {
+            if (err) {
+              logger.error('Can\'t insert the coAuthor ' + msg[1] + ' on pad : ' + chanId)
+            }
+            env.channels[chanId].coAuthor.push(msg[1]);
+          })
+        }
+      }
+
+      self.lib.pad.insertMessage(chanId, msg, function(err, doc) {
+        if (err) {
           cb(err);
         }
-        env.channels[chanName].messages.push(msg);
+        env.channels[chanId].messages.push(msg);
       });
     }
   });
 };
 
-var getMessages = function (env, chanName, handler, cb) {
-    getChannel(env, chanName, function (err, chan) {
+var getMessages = function (env, chanId, user, handler, cb) {
+    getChannel(env, chanId, user, function (err, chan) {
         if (err) {
             cb(err);
             return;
@@ -83,7 +107,7 @@ var getMessages = function (env, chanName, handler, cb) {
             chan.messages
                 .forEach(function (message) {
                     if (!message) { return; }
-                    handler(message);
+                    handler(JSON.stringify(message));
                 });
         } catch (err2) {
             console.error(err2);
@@ -95,11 +119,8 @@ var getMessages = function (env, chanName, handler, cb) {
     });
 };
 
-
-
-
-module.exports = function(dependencies) {
-  lib = require('../../lib/pad')(dependencies);
+module.exports = function(dependencies, lib) {
+  self.lib = lib;
   logger = dependencies('logger');
 
   var create = function (conf, cb) {
@@ -110,10 +131,10 @@ module.exports = function(dependencies) {
       };
       cb({
           message: function (channelName, content, cb) {
-              message(env, channelName, content, cb);
+              message(env, channelName, JSON.parse(content), cb);
           },
-          getMessages: function (channelName, msgHandler, cb) {
-              getMessages(env, channelName, msgHandler, cb);
+          getMessages: function (channelName, user, msgHandler, cb) {
+              getMessages(env, channelName, user, msgHandler, cb);
           },
           removeChannel: function (channelName, cb) {
               removeChannel(env, channelName, function (err) {

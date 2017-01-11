@@ -11,21 +11,54 @@ module.exports = function(dependencies) {
     return padModel.create(pad, callback);
   }
 
-  function get(id, callback) {
-    return padModel.findOne({'cryptpadId': id}).exec(callback);
+  function getPadById(chanId, callback) {
+    return padModel.findOne({'channel': chanId}).exec(callback);
   }
 
-  function insertMessage(id , msg, callback) {
-    return padModel.findOneAndUpdate({'cryptpadId': id},
-      {$push: {"messages": msg}},
+  function getAllPadsByUserId(userId, callback) {
+    return padModel.find({$or: [{'author': userId}, {'coAuthor': userId}] }).exec(callback);
+  }
+
+  function getPadsByAuthor(userId, callback) {
+    return padModel.find({'author': userId}).exec(callback);
+  }
+
+  function getPadsByCoAuthor(userId, callback) {
+    return padModel.find({'coAuthor': userId}).exec(callback);
+  }
+
+  function insertMessage(chanId , msg, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$push: {'messages': msg}},
       {new: true, safe: true, upsert: true},
+      callback
+    );
+  }
+
+  function insertValidateKey(validateKey, chanId, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$set: {'validateKey': validateKey}},
+      {new: true, safe: true, upsert: true},
+      callback
+    );
+  }
+
+  function insertCoAuthor(coAuthorId, chanId, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$push: {'coAuthor': coAuthorId}},
+      {new: true, safe:true, upsert: true},
       callback
     );
   }
 
   return {
     create,
-    get,
-    insertMessage
+    getPadById,
+    insertMessage,
+    insertValidateKey,
+    insertCoAuthor,
+    getAllPadsByUserId,
+    getPadsByAuthor,
+    getPadsByCoAuthor
   };
 };

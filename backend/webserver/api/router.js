@@ -1,28 +1,20 @@
 'use strict';
 
-var express = require('express');
-
-module.exports = function(dependencies) {
+module.exports = function(dependencies, lib, router) {
 
   const authorizationMW = dependencies('authorizationMW');
-  var controller = require('./controller')(dependencies);
-  var middleware = require('./middleware')(dependencies);
+  var controller = require('./controller')(dependencies, lib);
+  var middleware = require('./middleware')(dependencies, lib);
 
-  var router = express.Router();
+  router.get('/pad/:userId', authorizationMW.requiresAPILogin, controller.getAllPadsByUserId);
 
-  router.get('/api/sayhello', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
+  router.get('/pad/author/:userId', authorizationMW.requiresAPILogin, controller.getPadsByAuthorId);
 
-  router.post('/api/:channelId/message', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
+  router.get('/pad/coAuthor/:userId', authorizationMW.requiresAPILogin, controller.getPadsByCoAuthorId);
 
-  router.get('/api/:channelId/message', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
+  /*router.delete('/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
 
-  router.get('/api/:channelId',middleware.passThrough, controller.sayHello);
-
-  router.delete('/api/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
-
-  router.post('/api/close/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
-
-  router.post('/api/flush/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
+  router.post('/close/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);*/
 
   return router;
 };

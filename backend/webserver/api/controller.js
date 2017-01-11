@@ -1,16 +1,64 @@
 'use strict';
 
-var logger, core;
+module.exports = function(dependencies, lib) {
 
-function sayHello(req, res) {
-  logger.info('My module controller says hello world!');
-  return res.json(200, {message: core.getMessage()});
-}
+  const logger = dependencies('logger');
 
-module.exports = function(dependencies) {
-  logger = dependencies('logger');
-  core = require('./core')(dependencies);
   return {
-    sayHello: sayHello
+    getAllPadsByUserId,
+    getPadsByAuthorId,
+    getPadsByCoAuthorId
   };
+
+
+  function getAllPadsByUserId(req, res) {
+    lib.pad.getAllPadsByUserId(req.params.userId, (err, result) => {
+      if (err) {
+        logger.error('Error while getting pads for user %s', params.userId, err);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while deleting conversation'
+          }
+        });
+      }
+      return res.status(200).json(result);
+    });
+  }
+
+  function getPadsByAuthorId(req, res) {
+    lib.pad.getPadsByAuthor(req.params.userId, (err, result) => {
+      if (err) {
+        logger.error('Error while getting pads for user %s', params.userId, err);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while deleting conversation'
+          }
+        });
+      }
+      return res.status(200).json(result);
+    });
+  }
+
+  function getPadsByCoAuthorId(req, res) {
+    lib.pad.getPadsByCoAuthor(req.params.userId, (err, result) => {
+      if (err) {
+        logger.error('Error while getting pads for user %s', params.userId, err);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while deleting conversation'
+          }
+        });
+      }
+      return res.status(200).json(result);
+    });
+  }
 };

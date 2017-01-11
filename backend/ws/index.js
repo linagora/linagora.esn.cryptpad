@@ -7,7 +7,7 @@ const LAG_MAX_BEFORE_PING = 15000;
 let initialized = false;
 
 function init(dependencies, lib, config) {
-  var Storage = require(config.storage)(dependencies);
+  var Storage = require(config.storage)(dependencies, lib);
 
   if (initialized) {
     return logger.warn('The cryptpad service is already initialized');

@@ -195,7 +195,7 @@ var message = function (env, chanName, msg, cb) {
     });
 };
 
-var getMessages = function (env, chanName, handler, cb) {
+var getMessages = function (env, chanName, user, handler, cb) {
     getChannel(env, chanName, function (err, chan) {
         if (err) {
             cb(err);
@@ -237,8 +237,8 @@ module.exports = function(dependencies) {
               message: function (channelName, content, cb) {
                   message(env, channelName, content, cb);
               },
-              getMessages: function (channelName, msgHandler, cb) {
-                  getMessages(env, channelName, msgHandler, cb);
+              getMessages: function (channelName, user, msgHandler, cb) {
+                  getMessages(env, channelName, user, msgHandler, cb);
               },
               removeChannel: function (channelName, cb) {
                   removeChannel(env, channelName, function (err) {
