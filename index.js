@@ -1,10 +1,17 @@
 'use strict';
-var AwesomeModule = require('awesome-module');
-var Dependency = AwesomeModule.AwesomeModuleDependency;
-var path = require('path');
-const Config = require('./frontend/config/config');
+let AwesomeModule = require('awesome-module');
+let Dependency = AwesomeModule.AwesomeModuleDependency;
+let path = require('path');
+let glob = require('glob-all');
+let _ = require('lodash');
+let config = require('./frontend/cryptpad/config/config');
 
-var cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
+const NAME = 'cryptpad';
+const APP_ENTRY_POINT = NAME + '.app.js';
+const MODULE_NAME = 'linagora.esn.' + NAME;
+const FRONTEND_JS_PATH = __dirname + '/frontend/app/';
+
+let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
   dependencies: [
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.logger', 'logger'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.auth', 'auth'),
@@ -23,43 +30,40 @@ var cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
 
   states: {
     lib: function(dependencies, callback) {
-      var cryptpadlib = require('./backend/lib')(dependencies);
-      var cryptpad = require('./backend/webserver/api')(dependencies);
+      let libModule = require('./backend/lib')(dependencies);
+      let cryptpad = require('./backend/webserver/api')(dependencies, libModule);
 
-      var lib = {
+      let lib = {
         api: {
           cryptpad: cryptpad
         },
-        lib: cryptpadlib
+        lib: libModule
       };
 
       return callback(null, lib);
     },
 
     deploy: function(dependencies, callback) {
-      // Register the webapp
-      var app = require('./backend/webserver')(dependencies, this);
-      // Register every exposed endpoints
-      app.use('/', this.api.cryptpad);
+      let webserverWrapper = dependencies('webserver-wrapper');
+      let app = require('./backend/webserver')(this, dependencies);
+      let lessFile = path.resolve(__dirname, './frontend/app/styles.less');
+      let frontendModules = glob.sync([
+        FRONTEND_JS_PATH + '**/!(*spec).js'
+      ]).map(filepath => filepath.replace(FRONTEND_JS_PATH, ''));
 
-      var webserverWrapper = dependencies('webserver-wrapper');
-      // Register every exposed frontend scripts
-      var jsFiles = [
-        'app.js',
-        'services.js',
-        'directives.js',
-        'controllers.js'
-      ];
-      webserverWrapper.injectAngularModules('cryptpad', jsFiles, ['linagora.esn.cryptpad'], ['esn']);
-      var lessFile = path.resolve(__dirname, './frontend/css/styles.less');
-      webserverWrapper.injectLess('cryptpad', [lessFile], 'esn');
-      webserverWrapper.addApp('cryptpad', app);
+      _.pull(frontendModules, APP_ENTRY_POINT);
+      frontendModules = [APP_ENTRY_POINT].concat(frontendModules);
 
-      return callback();
+      app.use('/api', this.api.cryptpad);
+      webserverWrapper.injectAngularAppModules(NAME, frontendModules, MODULE_NAME, ['esn']);
+      webserverWrapper.injectLess(NAME, [lessFile], 'esn');
+      webserverWrapper.addApp(NAME, app);
+
+      callback();
     },
 
     start: function(dependencies, callback) {
-      require('./backend/ws').init(dependencies, this.lib, Config);
+      require('./backend/ws').init(dependencies, this.lib, config);
     }
   }
 });

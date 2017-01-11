@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
-    <script data-main="cryptpad/pad/main" src="/bower_components/requirejs/require.js"></script>
+    <script data-main="/cryptpad/cryptpad/pad/main" src="/bower_components/requirejs/require.js"></script>
     <script>
         require.config({
             waitSeconds: 60,
@@ -49,6 +49,6 @@
 </head>
 <body>
     <input type="hidden" id="userToken" value=''/>
-    <iframe id="pad-iframe" src="cryptpad/pad/inner.html"></iframe>
+    <iframe id="pad-iframe" src="/cryptpad/cryptpad/pad/inner.html"></iframe>
 </body>
 </html>

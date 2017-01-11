@@ -1,16 +1,16 @@
 require.config({ paths: { 'json.sortify': '/bower_components/json.sortify/dist/JSON.sortify',
-                          'config': '/cryptpad/config/config' }});
+                          'config': '/cryptpad/cryptpad/config/config' }});
 define([
-    '/cryptpad/customize.dist/messages.js?app=pad',
+    '/cryptpad/cryptpad/customize.dist/messages.js?app=pad',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/chainpad-netflux/chainpad-netflux.js',
     '/bower_components/hyperjson/hyperjson.js',
-    '/cryptpad/common/cursor.js',
+    '/cryptpad/cryptpad/common/cursor.js',
     '/bower_components/chainpad-json-validator/json-ot.js',
     'json.sortify',
     'config',
     '/bower_components/textpatcher/TextPatcher.amd.js',
-    '/cryptpad/common/common.js',
+    '/cryptpad/cryptpad/common/common.js',
     '/bower_components/diff-dom/diffDOM.js',
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages, Crypto, realtimeInput, Hyperjson, Cursor, JsonOT, JSONSortify, config, TextPatcher, Common) {

@@ -1,5 +1,5 @@
 define([
-    '/customize.dist/messages.js',
+    'cryptpad/cryptpad/customize.dist/messages.js',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages, Crypto) {
