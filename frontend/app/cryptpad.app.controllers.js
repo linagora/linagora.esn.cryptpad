@@ -9,21 +9,25 @@
         document.getElementById("userToken").value = session.user._id;
       }
 
-      function IndexController($scope, session, CryptpadRestangular) {
-
-        /*var hexToBase64 = function (hex) {
-            var hexArray = hex
-                .replace(/\r|\n/g, "")
-                .replace(/([\da-fA-F]{2}) ?/g, "0x$1 ")
-                .replace(/ +$/, "")
-                .split(" ");
-            var byteString = String.fromCharCode.apply(null, hexArray);
-            return window.btoa(byteString).replace(/\//g, '-').slice(0,-2);
+      function IndexController($scope, session, CryptpadRestangular, CryptpadUtils, _) {
+        $scope.getEditHashFromKeys = function (chanKey, editKeyStr) {
+            return '/#/cryptpad/1/edit/' + CryptpadUtils.hexToBase64(chanKey) + '/' + editKeyStr.replace(/\//g, '-');;
         };
 
-        $scope.getEditHashFromKeys = function (chanKey, editKeyStr) {
-            return '/#/cryptpad/1/edit/' + hexToBase64(chanKey) + '/' + editKeyStr.replace(/\//g, '-');;
-        };*/
+        $scope.canDelete = function(creatorPadId) {
+          if(!creatorPadId._id) {
+            return creatorPadId === session.user._id;
+          } else {
+            return creatorPadId._id === session.user._id
+          }
+        };
+
+        $scope.delete = function(pad) {
+          if($scope.canDelete(pad.author)) {
+            _.pull($scope.channels, pad);
+            CryptpadRestangular.one('pad', pad.channel).remove();
+          }
+        }
 
         CryptpadRestangular.one('pad', session.user._id).getList().then((channels) => {
           $scope.channels = channels.data;
