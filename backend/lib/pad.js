@@ -1,6 +1,10 @@
 'use strict';
 
 
+const CONSTANTS = require('../lib/constants');
+
+const SKIP_FIELDS = CONSTANTS.SKIP_FIELDS;
+
 
 module.exports = function(dependencies) {
 
@@ -16,7 +20,7 @@ module.exports = function(dependencies) {
   }
 
   function getAllPadsByUserId(userId, callback) {
-    return padModel.find({$or: [{'author': userId}, {'coAuthor': userId}] }).exec(callback);
+    return padModel.find({$or: [{'author': userId}, {'coAuthor': userId}] }).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
   }
 
   function getPadsByAuthor(userId, callback) {
@@ -51,6 +55,10 @@ module.exports = function(dependencies) {
     );
   }
 
+  function deletePad(chanId, callback) {
+    return padModel.findOneAndRemove({"channel": chanId}, callback);
+  }
+
   return {
     create,
     getPadById,
@@ -59,6 +67,7 @@ module.exports = function(dependencies) {
     insertCoAuthor,
     getAllPadsByUserId,
     getPadsByAuthor,
-    getPadsByCoAuthor
+    getPadsByCoAuthor,
+    deletePad
   };
 };

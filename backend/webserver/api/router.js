@@ -12,9 +12,9 @@ module.exports = function(dependencies, lib, router) {
 
   router.get('/pad/coAuthor/:userId', authorizationMW.requiresAPILogin, controller.getPadsByCoAuthorId);
 
-  /*router.delete('/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);
+  router.delete('/pad/:channelId', authorizationMW.requiresAPILogin, controller.deletePad);
 
-  router.post('/close/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);*/
+  /*router.post('/close/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);*/
 
   return router;
 };

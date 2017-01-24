@@ -7,7 +7,8 @@ module.exports = function(dependencies, lib) {
   return {
     getAllPadsByUserId,
     getPadsByAuthorId,
-    getPadsByCoAuthorId
+    getPadsByCoAuthorId,
+    deletePad
   };
 
 
@@ -20,7 +21,7 @@ module.exports = function(dependencies, lib) {
           error: {
             code: 500,
             message: 'Server Error',
-            details: 'Error while deleting conversation'
+            details: 'Error while getting pads'
           }
         });
       }
@@ -37,7 +38,7 @@ module.exports = function(dependencies, lib) {
           error: {
             code: 500,
             message: 'Server Error',
-            details: 'Error while deleting conversation'
+            details: 'Error while getting pads'
           }
         });
       }
@@ -54,11 +55,29 @@ module.exports = function(dependencies, lib) {
           error: {
             code: 500,
             message: 'Server Error',
-            details: 'Error while deleting conversation'
+            details: 'Error while getting pads'
           }
         });
       }
       return res.status(200).json(result);
     });
+  }
+
+  function deletePad(req, res) {
+    console.log(req.params.channelId);
+    lib.pad.deletePad(req.params.channelId, (err, result) => {
+      if(err) {
+        logger.error('Error while deleting pads : %s', chanId);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while deleting pad'
+          }
+        });
+      }
+      return res.status(200).json();
+    })
   }
 };

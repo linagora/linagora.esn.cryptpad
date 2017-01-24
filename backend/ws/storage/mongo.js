@@ -1,6 +1,6 @@
-var
-logger;
+var logger;
 const Nacl = require('tweetnacl');
+const moment = require('moment');
 var self = this;
 
 var removeChannel = function (channelName, cb) {
@@ -19,7 +19,7 @@ var createChannel = function(env, channId, user, cb) {
   var chan = env.channels[channId] = {
     channel: channId,
     author: user,
-    name: 'test',
+    name: 'Pad - ' + moment().format("ddd MMM DDD YYYY HH:mm"),
     messages: [],
     coAuthor: []
   };
@@ -62,6 +62,18 @@ var getChannel = function (env, chanId, user, callback) {
   });
 };
 
+function isCoAuthor(chan, userId) {
+  var isCoAuthor = false
+  chan.coAuthor.forEach(function(user) {
+    if(user._id && user._id == userId) {
+      isCoAuthor = true;
+    } else if (user == userId) {
+      isCoAuthor =  true;
+    }
+  });
+  return isCoAuthor;
+}
+
 var message = function (env, chanId, msg, cb) {
   getChannel(env, chanId, null, function(err, chan) {
     if (err) {
@@ -76,14 +88,14 @@ var message = function (env, chanId, msg, cb) {
           }
         })
       } else {
-        if ((!chan.coAuthor.includes(msg[1])) && (chan.author !=  msg[1])) {
+        if (!isCoAuthor(chan, msg[1]) && (chan.author !=  msg[1])) {
           logger.info(msg[1] + " start coAuthor on pads : " + chanId);
-          self.lib.insertCoAuthor(msg[1], chanId, function(err, doc) {
+          self.lib.pad.insertCoAuthor(msg[1], chanId, function(err, doc) {
             if (err) {
               logger.error('Can\'t insert the coAuthor ' + msg[1] + ' on pad : ' + chanId)
             }
             env.channels[chanId].coAuthor.push(msg[1]);
-          })
+          });
         }
       }
 
@@ -122,6 +134,7 @@ var getMessages = function (env, chanId, user, handler, cb) {
 module.exports = function(dependencies, lib) {
   self.lib = lib;
   logger = dependencies('logger');
+
 
   var create = function (conf, cb) {
       var env = {
