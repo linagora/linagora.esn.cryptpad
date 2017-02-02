@@ -74,7 +74,6 @@ define([
 
         editor.on('instanceReady', function (Ckeditor) {
             var $bar = $('#pad-iframe')[0].contentWindow.$('#cke_1_toolbox');
-            var parsedHash = Common.parsePadUrl(window.location.href);
 
             /* add a class to the magicline plugin so we can pick it out more easily */
 
@@ -261,7 +260,7 @@ define([
                 channel: secret.channel,
 
                 // our public key
-                validateKey: secret.keys.validateKey || undefined,
+                validateKey: secret.keys.validateKey + ";" + secret.keys.editKeyStr || undefined,
                 readOnly: readOnly,
 
                 // Pass in encrypt and decrypt methods
@@ -303,8 +302,6 @@ define([
             };
 
             var onInit = realtimeOptions.onInit = function (info) {
-                var editHash = Common.getEditHashFromKeys(info.channel, secret.keys);
-                Common.replaceHash(editHash);
             };
 
             // this should only ever get called once, when the chain syncs
