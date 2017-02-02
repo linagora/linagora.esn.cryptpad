@@ -8,7 +8,8 @@ module.exports = function(dependencies, lib) {
     getAllPadsByUserId,
     getPadsByAuthorId,
     getPadsByCoAuthorId,
-    deletePad
+    deletePad,
+    insertKeys
   };
 
 
@@ -64,7 +65,6 @@ module.exports = function(dependencies, lib) {
   }
 
   function deletePad(req, res) {
-    console.log(req.params.channelId);
     lib.pad.deletePad(req.params.channelId, (err, result) => {
       if(err) {
         logger.error('Error while deleting pads : %s', chanId);
@@ -79,5 +79,22 @@ module.exports = function(dependencies, lib) {
       }
       return res.status(200).json();
     })
+  }
+
+  function insertKeys(req, res) {
+    lib.pad.insertKey(req.body.key, req.params.channelId, (err, result) => {
+      if(err) {
+        logger.console.error('Error while updating the pad : %s', req.params.channelId);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while updating pad'
+          }
+        });
+      }
+      return res.status(200).json();
+    });
   }
 };

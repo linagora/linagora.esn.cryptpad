@@ -8,6 +8,7 @@ module.exports = function(dependencies) {
   const PadSchema = new mongoose.Schema({
     channel: {type: String, required: true},
     validateKey: {type:String, required: false},
+    key: {type:String, required: false},
     author: {type: ObjectId, ref:'User'},
     coAuthor: [{type: ObjectId, ref:'User', unique: true}],
     name: {type: String, required: true},

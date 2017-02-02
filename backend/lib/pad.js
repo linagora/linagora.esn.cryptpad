@@ -41,8 +41,16 @@ module.exports = function(dependencies) {
 
   function insertValidateKey(validateKey, chanId, callback) {
     return padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'validateKey': validateKey}},
+      {$set: {'validateKey': validateKey[0], 'key': validateKey[1]}},
       {new: true, safe: true, upsert: true},
+      callback
+    );
+  }
+
+  function insertKey(key, chanId, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$set: {'key': key}},
+      {new: true, safe:true, upsert: true},
       callback
     );
   }
@@ -64,6 +72,7 @@ module.exports = function(dependencies) {
     getPadById,
     insertMessage,
     insertValidateKey,
+    insertKey,
     insertCoAuthor,
     getAllPadsByUserId,
     getPadsByAuthor,

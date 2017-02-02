@@ -80,13 +80,13 @@ var message = function (env, chanId, msg, cb) {
       return cb(err);
     } else {
       if (msg.validateKey && msg.channel) {
-        self.lib.pad.insertValidateKey(msg.validateKey, msg.channel, function(err, chan) {
+        var keys = msg.validateKey.split(';');
+        msg = {validateKey: keys[0], channel: msg.channel};
+        self.lib.pad.insertValidateKey(keys, msg.channel, function(err, chan) {
           if (err) {
             cb(err);
-          } else {
-            cb(null);
           }
-        })
+        });
       } else {
         if (!isCoAuthor(chan, msg[1]) && (chan.author !=  msg[1])) {
           logger.info(msg[1] + " start coAuthor on pads : " + chanId);
@@ -94,11 +94,9 @@ var message = function (env, chanId, msg, cb) {
             if (err) {
               logger.error('Can\'t insert the coAuthor ' + msg[1] + ' on pad : ' + chanId)
             }
-            env.channels[chanId].coAuthor.push(msg[1]);
           });
         }
       }
-
       self.lib.pad.insertMessage(chanId, msg, function(err, doc) {
         if (err) {
           cb(err);
