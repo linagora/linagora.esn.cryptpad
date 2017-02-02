@@ -32,9 +32,6 @@
             a(ng-repeat="user in channel.coAuthor" href="#/profile/{{user._id}}/details/view")
               img(ng-src='/api/users/{{::user._id}}/profile/avatar', alt='{{user.firstname}} {{user.lastname}}')
           td
-            a(ng-if="canDelete(channel.author)" ng-click="delete(channel)")
-              "Remove"
-            a(href="#")
-              "Lock"
-            a(ng-href="{{getEditHashFromKeys(channel.channel, channel.messages[0].key)}}" target="_blank")
-              "Modify"
+            a(ng-if="canDelete(channel.author)" ng-click="delete(channel)") "Remove"
+            a(href="#") "Lock"
+            a(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}" target="_blank") "Modify"
