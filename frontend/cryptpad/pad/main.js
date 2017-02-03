@@ -3,7 +3,7 @@ require.config({ paths: { 'json.sortify': '/bower_components/json.sortify/dist/J
 define([
     '/cryptpad/cryptpad/customize.dist/messages.js?app=pad',
     '/bower_components/chainpad-crypto/crypto.js',
-    '/bower_components/chainpad-netflux/chainpad-netflux.js',
+    '/cryptpad/cryptpad/pad/chainpad-netflux.js',
     '/bower_components/hyperjson/hyperjson.js',
     '/cryptpad/cryptpad/common/cursor.js',
     '/bower_components/chainpad-json-validator/json-ot.js',
