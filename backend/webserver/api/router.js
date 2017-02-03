@@ -14,7 +14,7 @@ module.exports = function(dependencies, lib, router) {
 
   router.get('/pad/coAuthor/:userId', authorizationMW.requiresAPILogin, controller.getPadsByCoAuthorId);
 
-  router.delete('/pad/:channelId', authorizationMW.requiresAPILogin, controller.deletePad);
+  router.delete('/pad/:channelId', authorizationMW.requiresAPILogin, middleware.hasPermissions, controller.deletePad);
 
   /*router.post('/close/:channelId', authorizationMW.requiresAPILogin, middleware.passThrough, controller.sayHello);*/
 

@@ -94,6 +94,7 @@ var message = function (env, chanId, msg, cb) {
             if (err) {
               logger.error('Can\'t insert the coAuthor ' + msg[1] + ' on pad : ' + chanId)
             }
+            env.channels[chanId].coAuthor.push(msg[1]);
           });
         }
       }

@@ -67,6 +67,10 @@ module.exports = function(dependencies) {
     return padModel.findOneAndRemove({"channel": chanId}, callback);
   }
 
+  function isCreator(chanId, userId, callback) {
+    return padModel.findOne({'channel': chanId, 'author': userId}).exec(callback);
+  }
+
   return {
     create,
     getPadById,
@@ -77,6 +81,7 @@ module.exports = function(dependencies) {
     getAllPadsByUserId,
     getPadsByAuthor,
     getPadsByCoAuthor,
-    deletePad
+    deletePad,
+    isCreator
   };
 };
