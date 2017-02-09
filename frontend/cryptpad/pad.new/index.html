@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html class="cp pad">
+<head>
+    <title>CryptPad</title>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <link rel="icon" type="image/png"
+        href="/cryptpad/cryptpad/customize.dist.new/main-favicon.png"
+        data-main-favicon="/cryptpad/cryptpad/customize.dist.new/main-favicon.png"
+        data-alt-favicon="/cryptpad/cryptpad/customize.dist.new/alt-favicon.png"
+        id="favicon" />
+    <link rel="stylesheet" href="/cryptpad/cryptpad/customize.dist.new/main.css" />
+    <script data-main="/cryptpad/cryptpad/pad.new/main" src="/bower_components/requirejs/require.js"></script>
+    <script>
+        require.config({
+            waitSeconds: 60,
+        });
+    </script>
+    <style>
+        html, body {
+            margin: 0px;
+            padding: 0px;
+        }
+        #pad-iframe {
+            position:fixed;
+            top:70px;
+            left:0px;
+            bottom:0px;
+            right:0px;
+            width:100%;
+            height:100%;
+            border:none;
+            margin:0;
+            padding:0;
+            overflow:hidden;
+        }
+        #feedback {
+            display: none;
+            position: fixed;
+            top: 0px;
+            right: 0px;
+            border: 0px;
+            height: 100vh;
+            width: 30vw;
+            background-color: #222;
+            color: #ccc;
+        }
+        #debug {
+            height: 20px;
+            position: absolute;
+            right: 0px;
+            top: 70px;
+        }
+        #debug button {
+            visibility: hidden;
+        }
+        #debug:hover button {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <input type="hidden" id="userToken" value=''/>
+    <iframe id="pad-iframe" src="/cryptpad/cryptpad/pad.new/inner.html"></iframe>
+</body>
+</html>
