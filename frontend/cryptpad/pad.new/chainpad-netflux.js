@@ -70,7 +70,6 @@ define([
         };
 
         var onJoining = function(peer) {
-          console.log(peer);
             if(peer.length !== 24) { return; }
             var list = userList.users;
             var index = list.indexOf(peer);

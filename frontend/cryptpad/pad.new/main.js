@@ -561,7 +561,6 @@ define([
             };
 
             var onInit = realtimeOptions.onInit = function (info) {
-              console.log(info);
                 userList = info.userList;
                 var config = {
                     userData: userData,
@@ -655,6 +654,7 @@ define([
 
                 module.users = info.userList.users;
                 module.realtime = info.realtime;
+                module.leave = info.leave;
 
                 var shjson = info.realtime.getUserDoc();
                 applyHjson(shjson);
@@ -727,7 +727,7 @@ define([
             };
 
             var onpopstate = window.onpopstate = function(event) {
-              module.realtime.abort()
+              module.leave("quit");
               window.onpopstate = undefined;
             };
 
