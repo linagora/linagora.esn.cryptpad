@@ -631,7 +631,7 @@ define([
                 }
 
                 // set the hash
-                if (!readOnly) { Cryptpad.replaceHash(editHash); }
+                //if (!readOnly) { Cryptpad.replaceHash(editHash); }
             };
 
             // this should only ever get called once, when the chain syncs
@@ -727,6 +727,7 @@ define([
             };
 
             var onpopstate = window.onpopstate = function(event) {
+              document.title = "Home - OpenPaas"
               module.leave("quit");
               window.onpopstate = undefined;
             };

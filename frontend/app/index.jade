@@ -34,4 +34,4 @@
           td
             a(ng-if="canDelete(channel.author)" ng-click="delete(channel)") "Remove"
             a(href="#") "Lock"
-            a(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}" target="_blank") "Modify"
+            a(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}") "Modify"

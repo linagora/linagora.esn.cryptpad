@@ -1,12 +1,12 @@
 define([
-    'cryptpad/cryptpad/customize.dist.new/messages.js',
-    'cryptpad/cryptpad/customize.dist.new/store.js',
+    '/cryptpad/cryptpad/customize.dist.new/messages.js',
+    '/cryptpad/cryptpad/customize.dist.new/store.js',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/alertifyjs/dist/js/alertify.js',
     '/bower_components/spin.js/spin.min.js',
-    'cryptpad/cryptpad/common.new/clipboard.js',
-    'cryptpad/cryptpad/customize.dist.new/fsStore.js',
-    'cryptpad/cryptpad/customize.dist.new/application_config.js',
+    '/cryptpad/cryptpad/common.new/clipboard.js',
+    '/cryptpad/cryptpad/customize.dist.new/fsStore.js',
+    '/cryptpad/cryptpad/customize.dist.new/application_config.js',
 
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages, Store, Crypto, Alertify, Spinner, Clipboard, FS, AppConfig) {
