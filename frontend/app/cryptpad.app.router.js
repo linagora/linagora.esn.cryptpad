@@ -6,12 +6,12 @@
     $stateProvider
       .state('cryptpad', {
         url: '/cryptpad',
-        templateUrl: '/cryptpad/cryptpad/pad.new/index.html',
+        templateUrl: '/cryptpad/app/editor/index.html',
         controller: 'CryptpadController'
       })
       .state('editCryptpad', {
         url: '/cryptpad/:version/:form/:channel/:doc',
-        templateUrl: '/cryptpad/cryptpad/pad.new/index.html',
+        templateUrl: '/cryptpad/app/editor/index.html',
         controller: 'CryptpadController'
       })
       .state('padList', {
