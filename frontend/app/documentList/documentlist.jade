@@ -1,0 +1,34 @@
+table.table.table-hover
+  thead
+    tr
+      th
+        | #{__('Pad\'s name')}
+      th
+        | #{__('Pad\'s Id')}
+      th
+        | #{__('Created By')}
+      th
+        | #{__('CoAuthored By')}
+      th
+        | #{__('Action')}
+  tbody(ng-if="channels.length == 0")
+    tr
+      td(colspan="4")
+        | #{__('No pad')}
+  tbody(ng-if="channels.length != 0")
+    tr(ng-repeat="channel in channels")
+      td 
+        | {{channel.name}}
+      td 
+        | {{channel.channel}}
+      td 
+        | {{channel.author.firstname}} {{channel.author.lastname}}
+      td.co-author
+        a(ng-repeat="user in channel.coAuthor" href="#/profile/{{user._id}}/details/view")
+          img(ng-src='/api/users/{{::user._id}}/profile/avatar', alt='{{user.firstname}} {{user.lastname}}')
+      td
+        a(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}")
+          i.mdi.mdi-pencil.mdi-18px
+        i.mdi.mdi-share.mdi-18px
+        a(ng-if="canDelete(channel.author)" ng-click="delete(channel)")
+          i.mdi.mdi-delete.mdi-18px
