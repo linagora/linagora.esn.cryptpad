@@ -13,7 +13,7 @@ table.table.table-hover
         | #{__('Action')}
   tbody(ng-if="channels.length == 0")
     tr
-      td(colspan="4")
+      td.text-center(colspan="5")
         | #{__('No pad')}
   tbody(ng-if="channels.length != 0")
     tr(ng-repeat="channel in channels")
@@ -27,8 +27,7 @@ table.table.table-hover
         a(ng-repeat="user in channel.coAuthor" href="#/profile/{{user._id}}/details/view")
           img(ng-src='/api/users/{{::user._id}}/profile/avatar', alt='{{user.firstname}} {{user.lastname}}')
       td
-        a(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}")
+        a.md-icon-button.md-button.md-ink-ripple(ng-href="{{getEditHashFromKeys(channel.channel, channel.key)}}")
           i.mdi.mdi-pencil.mdi-18px
-        i.mdi.mdi-share.mdi-18px
-        a(ng-if="canDelete(channel.author)" ng-click="delete(channel)")
+        a.md-icon-button.md-button.md-ink-ripple(ng-if="canDelete(channel.author)" ng-click="delete(channel)")
           i.mdi.mdi-delete.mdi-18px
