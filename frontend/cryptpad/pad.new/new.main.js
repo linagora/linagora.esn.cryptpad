@@ -627,6 +627,7 @@ define([
                 $rightside.append($forgetPad);
 
                 if (!readOnly) {
+                    $editShare.append(Cryptpad.createButton('shareWithUser', false, {}));
                     $editShare.append(Cryptpad.createButton('editshare', false, {editHash: editHash}));
                 }
                 if (viewHash) {

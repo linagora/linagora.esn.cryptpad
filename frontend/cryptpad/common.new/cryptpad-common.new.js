@@ -18,6 +18,8 @@ define([
 */
     var $ = window.jQuery;
 
+    var channel;
+
     // When set to true, USE_FS_STORE becomes the default store, but the localStorage store is
     // still loaded for migration purpose. When false, the localStorage is used.
     var USE_FS_STORE = AppConfig.USE_FS_STORE;
@@ -183,6 +185,8 @@ define([
         }
         if (!/1\/edit\//.test( window.parent.location.href)) {
             generate();
+            channel = base64ToHex(secret.key);
+            console.log(secret);
             return secret;
         } else {
             var hash = secretHash ||  window.parent.location.hash.slice(1);
@@ -245,10 +249,13 @@ define([
                 if (version === "1") {
                     var mode = hashArray[3];
                     if (mode === 'edit') {
+                        console.log(hashArray);
                         secret.channel = base64ToHex(hashArray[4]);
+                        channel = secret.channel;
                         var keys = Crypto.createEditCryptor(hashArray[5].replace(/-/g, '/'));
                         secret.keys = keys;
                         secret.key = keys.editKeyStr;
+                        console.log(secret);
                         if (secret.channel.length !== 32 || secret.key.length !== 24) {
                             common.alert("The channel key and/or the encryption key is invalid");
                             throw new Error("The channel key and/or the encryption key is invalid");
@@ -756,6 +763,8 @@ define([
             title = getDefaultName(parsed);
         }
 
+        $.post('/cryptpad/api/pad/' + channel + '/name/' + title);
+
         common.setPadTitle(title, function (err, data) {
             if (err) {
                 console.log("unable to set pad title");
@@ -889,6 +898,13 @@ define([
                         }
                     });
                 }
+                break;
+            case 'shareWithUser':
+                button = $('<button>', {
+                    title: 'Partager avec un Utilisateur OpenPaas',
+                    id: 'shareButton',
+                    chanId: channel
+                }).text('Partager avec un Utilisateur');
                 break;
             case 'viewshare':
                 button = $('<button>', {

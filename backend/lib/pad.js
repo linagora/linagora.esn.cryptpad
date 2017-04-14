@@ -16,7 +16,7 @@ module.exports = function(dependencies) {
   }
 
   function getPadById(chanId, callback) {
-    return padModel.findOne({'channel': chanId}).exec(callback);
+    return padModel.findOne({'channel': chanId}).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
   }
 
   function getAllPadsByUserId(userId, callback) {
@@ -58,9 +58,14 @@ module.exports = function(dependencies) {
   function insertCoAuthor(coAuthorId, chanId, callback) {
     return padModel.findOneAndUpdate({'channel': chanId},
       {$push: {'coAuthor': coAuthorId}},
-      {new: true, safe:true, upsert: true},
       callback
     );
+  }
+
+  function setCoAuthors(coAuthors, chanId, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$set: {'coAuthor': coAuthors}}
+    ).populate('coAuthor').exec(callback);
   }
 
   function deletePad(chanId, callback) {
@@ -71,6 +76,13 @@ module.exports = function(dependencies) {
     return padModel.findOne({'channel': chanId, 'author': userId}).exec(callback);
   }
 
+  function changeName(chanId, padName, callback) {
+    return padModel.findOneAndUpdate({'channel': chanId},
+      {$set: {'name': padName}},
+      callback
+    );
+  }
+
   return {
     create,
     getPadById,
@@ -78,10 +90,12 @@ module.exports = function(dependencies) {
     insertValidateKey,
     insertKey,
     insertCoAuthor,
+    setCoAuthors,
     getAllPadsByUserId,
     getPadsByAuthor,
     getPadsByCoAuthor,
     deletePad,
-    isCreator
+    isCreator,
+    changeName
   };
 };
