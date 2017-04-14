@@ -8,11 +8,17 @@ module.exports = function(dependencies, lib, router) {
 
   router.get('/pad/:userId', authorizationMW.requiresAPILogin, controller.getAllPadsByUserId);
 
+  router.get('/pads/pad/:channelId', authorizationMW.requiresAPILogin, controller.getPad)
+
   router.post('/pad/:channelId/key', authorizationMW.requiresAPILogin, controller.insertKeys);
+
+  router.post('/pad/:channelId/name/:name', authorizationMW.requiresAPILogin, controller.changePadName);
 
   router.get('/pad/author/:userId', authorizationMW.requiresAPILogin, controller.getPadsByAuthorId);
 
   router.get('/pad/coAuthor/:userId', authorizationMW.requiresAPILogin, controller.getPadsByCoAuthorId);
+
+  router.post('/pad/:chanId/coAuthor', authorizationMW.requiresAPILogin, controller.addCoAuthor);
 
   router.delete('/pad/:channelId', authorizationMW.requiresAPILogin, middleware.hasPermissions, controller.deletePad);
 
