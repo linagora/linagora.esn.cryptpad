@@ -3,13 +3,18 @@
 module.exports = function(dependencies, lib) {
 
   const logger = dependencies('logger');
+  const emailSender = require('./emailSender').sharedPad(dependencies, lib);
+  const _ = require('lodash');
 
   return {
+    getPad,
     getAllPadsByUserId,
     getPadsByAuthorId,
     getPadsByCoAuthorId,
     deletePad,
-    insertKeys
+    insertKeys,
+    changePadName,
+    addCoAuthor
   };
 
 
@@ -97,4 +102,63 @@ module.exports = function(dependencies, lib) {
       return res.status(200).json();
     });
   }
+
+  function changePadName(req, res) {
+    lib.pad.changeName(req.params.channelId, req.params.name, (err, result) => {
+      if (err) {
+        logger.console.error('Error while updating the pad : %s', req.params.channelId);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while updating pad'
+          }
+        });
+      }
+      return res.status(200).json();
+    });
+  }
+
+  function addCoAuthor(req, res) {
+    lib.pad.setCoAuthors(req.body, req.params.chanId, (err, result) => {
+      if (err) {
+        logger.console.error('Error while updating the pad : %s', req.params.channelId);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while updating pad'
+          }
+        });
+      }
+      /*emailSender.sendEmail({
+        data: {
+
+        }
+      })*/
+      console.log(result);
+
+    });
+    return res.status(200).json();
+  }
+
+  function getPad(req, res) {
+    lib.pad.getPadById(req.params.channelId, (err, result) => {
+      if (err) {
+        logger.error('Error while getting pads %s', req.params.channelId, err);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while getting pads'
+          }
+        });
+      }
+      return res.status(200).json(result);
+    });
+  }
+
 };

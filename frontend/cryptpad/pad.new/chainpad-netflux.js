@@ -42,6 +42,7 @@ define([
         var websocketUrl = config.websocketURL;
         var userName = config.userName;
         var channel = config.channel;
+        console.log(channel);
         var Crypto = config.crypto;
         var validateKey = config.validateKey;
         var readOnly = config.readOnly || false;

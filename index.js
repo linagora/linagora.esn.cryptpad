@@ -25,6 +25,7 @@ let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.webserver.middleware.token', 'tokenMW'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.wsserver', 'wsserver'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.helpers', 'helpers'),
+    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.email', 'email'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.db', 'db')
   ],
 

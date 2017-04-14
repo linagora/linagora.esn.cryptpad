@@ -4,6 +4,9 @@
   angular.module('linagora.esn.cryptpad', [
     'op.dynamicDirective',
     'ui.router',
-    'restangular'
+    'restangular',
+    'ngMaterial',
+    'ngMessages',
+    'esn.notification'
   ]);
 })();
