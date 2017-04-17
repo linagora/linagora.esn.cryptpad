@@ -4,6 +4,7 @@ module.exports = function(dependencies, lib) {
 
   const logger = dependencies('logger');
   const emailSender = require('./emailSender').sharedPad(dependencies, lib);
+  const utils = require('./utils');
   const _ = require('lodash');
 
   return {
@@ -133,13 +134,24 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
-      /*emailSender.sendEmail({
+      var coAuthorEmails = []
+      _.map(result.accounts, function(userEmail) {
+        coAuthorEmails.push(userEmail.emails[userEmail.preferredEmailIndex]);
+      })
+      emailSender.sendEmail({
         data: {
-
+          userSender: result.author,
+          email: coAuthorEmails,
+          fileShared: {
+            filename: result.name
+          },
+          fileUrl: url.format({
+                    protocol: req.protocol,
+                    host: req.get('host'),
+                    pathname: '#/cryptpad/1/edit/' + utils.hexToBase64(result.channel) + '/' + result.key.replace(/\//g, '-')
+                  })
         }
-      })*/
-      console.log(result);
-
+      })
     });
     return res.status(200).json();
   }
