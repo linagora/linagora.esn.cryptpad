@@ -6,7 +6,7 @@
 
     function documentListController($scope, session, _, CryptpadUtils, CryptpadRestangular) {
       $scope.getEditHashFromKeys = function (chanKey, editKeyStr) {
-          return '/#/cryptpad/1/edit/' + CryptpadUtils.hexToBase64(chanKey) + '/' + editKeyStr.replace(/\//g, '-');;
+          return '/#/cryptpad/1/edit/' + CryptpadUtils.hexToBase64(chanKey) + '/' + editKeyStr.replace(/\//g, '-');
       };
 
       let canDelete = $scope.canDelete = function(creatorPadId) {
