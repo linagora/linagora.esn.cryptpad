@@ -81,6 +81,10 @@ define([
         };
 
         var onReady = function(wc, network) {
+
+            if (network.webChannels[0].id) {
+              $('#shareButton').attr('chanId', network.webChannels[0].id);
+            }
             // Trigger onReady only if not ready yet. This is important because the history keeper sends a direct
             // message through "network" when it is synced, and it triggers onReady for each channel joined.
             if (!initializing) { return; }
