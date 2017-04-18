@@ -64,7 +64,8 @@ module.exports = function(dependencies) {
 
   function setCoAuthors(coAuthors, chanId, callback) {
     padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'coAuthor': coAuthors}}
+      {$set: {'coAuthor': coAuthors}},
+      {new: true}
     ).populate('author coAuthor').exec(callback);
   }
 

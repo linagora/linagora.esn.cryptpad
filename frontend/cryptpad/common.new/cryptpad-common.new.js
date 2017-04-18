@@ -186,7 +186,6 @@ define([
         if (!/1\/edit\//.test( window.parent.location.href)) {
             generate();
             channel = base64ToHex(secret.key);
-            console.log(secret);
             return secret;
         } else {
             var hash = secretHash ||  window.parent.location.hash.slice(1);
@@ -763,7 +762,8 @@ define([
             title = getDefaultName(parsed);
         }
 
-        $.post('/cryptpad/api/pad/' + channel + '/name/' + title);
+        var chanId = $('#shareButton').attr('chanid');
+        $.post('/cryptpad/api/pad/' + chanId + '/name/' + title);
 
         common.setPadTitle(title, function (err, data) {
             if (err) {

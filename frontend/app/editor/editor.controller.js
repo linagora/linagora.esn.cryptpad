@@ -21,7 +21,7 @@
 
       function showPrompt(ev, chanId, pad) {
         var newScope = $scope.$new();
-        if(pad.coAuthor) {
+        if(pad.coAuthor.length != 0) {
           newScope.newUsersGroups = _.map(pad.coAuthor, function(user) {
             user.displayName = user.firstname + " " + user.lastname;
             return user

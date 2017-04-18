@@ -28,7 +28,7 @@ var createChannel = function(env, channId, user, cb) {
 }
 
 var getChannel = function (env, chanId, user, callback) {
-  if (env.channels[chanId]) {
+  /*if (env.channels[chanId]) {
       var chan = env.channels[chanId];
       chan.atime = +new Date();
       if (chan.whenLoaded) {
@@ -37,7 +37,7 @@ var getChannel = function (env, chanId, user, callback) {
           callback(undefined, chan);
       }
       return;
-  }
+  }*/
 
   self.lib.pad.getPadById(chanId, function(err, chan) {
     if (err) {
@@ -88,7 +88,7 @@ var message = function (env, chanId, msg, cb) {
           }
         });
       } else {
-        if (!isCoAuthor(chan, msg[1]) && (chan.author !=  msg[1])) {
+        if (!isCoAuthor(chan, msg[1]) && (chan.author._id !=  msg[1])) {
           logger.info(msg[1] + " start coAuthor on pads : " + chanId);
           self.lib.pad.insertCoAuthor(msg[1], chanId, function(err, doc) {
             if (err) {
