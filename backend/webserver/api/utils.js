@@ -7,7 +7,7 @@ function hexToBase64(hex) {
         .replace(/ +$/, "")
         .split(" ");
     var byteString = String.fromCharCode.apply(null, hexArray);
-    return window.btoa(byteString).replace(/\//g, '-').slice(0,-2);
+    return Buffer.from(byteString, 'binary').toString('base64').replace(/\//g, '-').slice(0,-2);
 }
 
 module.exports = function() {

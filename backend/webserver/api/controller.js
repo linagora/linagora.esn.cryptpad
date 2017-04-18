@@ -4,7 +4,8 @@ module.exports = function(dependencies, lib) {
 
   const logger = dependencies('logger');
   const emailSender = require('./emailSender').sharedPad(dependencies, lib);
-  const utils = require('./utils');
+  const utils = require('./utils')();
+  const url = require('url');
   const _ = require('lodash');
 
   return {
@@ -134,11 +135,12 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
-      var coAuthorEmails = []
-      _.map(result.accounts, function(userEmail) {
-        coAuthorEmails.push(userEmail.emails[userEmail.preferredEmailIndex]);
-      })
-      emailSender.sendEmail({
+
+      var coAuthorEmails = _.map(result.coAuthor, function(coAuthor) {
+        return coAuthor.accounts[0].emails[0];
+      });
+
+      var emailData = {
         data: {
           userSender: result.author,
           email: coAuthorEmails,
@@ -151,9 +153,21 @@ module.exports = function(dependencies, lib) {
                     pathname: '#/cryptpad/1/edit/' + utils.hexToBase64(result.channel) + '/' + result.key.replace(/\//g, '-')
                   })
         }
+      };
+
+      emailSender.sendEmail(emailData, function (err, ok) {
+        if (err) {
+          res.status(500).json({
+            error: {
+              code: 500,
+              message: 'Error when sending mail',
+              detail: err
+            }
+          });
+        }
+        res.status(200).json(result);
       })
     });
-    return res.status(200).json();
   }
 
   function getPad(req, res) {
