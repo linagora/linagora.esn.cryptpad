@@ -150,7 +150,7 @@ module.exports = function(dependencies, lib) {
           fileUrl: url.format({
                     protocol: req.protocol,
                     host: req.get('host'),
-                    pathname: '#/cryptpad/1/edit/' + utils.hexToBase64(result.channel) + '/' + result.key.replace(/\//g, '-')
+                    hash: '#/cryptpad/1/edit/' + utils.hexToBase64(result.channel) + '/' + result.key.replace(/\//g, '-')
                   })
         }
       };
