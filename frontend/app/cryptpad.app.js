@@ -7,6 +7,7 @@
     'restangular',
     'ngMaterial',
     'ngMessages',
-    'esn.notification'
+    'esn.notification',
+    'naturalSort'
   ]);
 })();
