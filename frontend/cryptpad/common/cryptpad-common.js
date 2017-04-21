@@ -1,12 +1,12 @@
 define([
-    '/cryptpad/cryptpad/customize.dist.new/messages.js',
-    '/cryptpad/cryptpad/customize.dist.new/store.js',
+    '/cryptpad/cryptpad/customize.dist/messages.js',
+    '/cryptpad/cryptpad/customize.dist/store.js',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/alertifyjs/dist/js/alertify.js',
     '/bower_components/spin.js/spin.min.js',
-    '/cryptpad/cryptpad/common.new/clipboard.js',
-    '/cryptpad/cryptpad/customize.dist.new/fsStore.js',
-    '/cryptpad/cryptpad/customize.dist.new/application_config.js',
+    '/cryptpad/cryptpad/common/clipboard.js',
+    '/cryptpad/cryptpad/customize.dist/fsStore.js',
+    '/cryptpad/cryptpad/customize.dist/application_config.js',
 
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages, Store, Crypto, Alertify, Spinner, Clipboard, FS, AppConfig) {
@@ -17,6 +17,8 @@ define([
     Additionally, there is some basic functionality for import/export.
 */
     var $ = window.jQuery;
+
+    var channel;
 
     // When set to true, USE_FS_STORE becomes the default store, but the localStorage store is
     // still loaded for migration purpose. When false, the localStorage is used.
@@ -176,16 +178,17 @@ define([
             secret.keys = Crypto.createEditCryptor();
             secret.key = Crypto.createEditCryptor().editKeyStr;
         };
-        if (/#\?path=/.test(window.location.href)) {
-            var arr = window.location.hash.match(/\?path=(.+)/);
+        if (/#\?path=/.test( window.parent.location.href)) {
+            var arr =  window.parent.location.hash.match(/\?path=(.+)/);
             common.initialPath = arr[1] || undefined;
-            window.location.hash = '';
+             window.parent.location.hash = '';
         }
-        if (!/1\/edit\//.test(window.location.href)) {
+        if (!/1\/edit\//.test( window.parent.location.href)) {
             generate();
+            channel = base64ToHex(secret.key);
             return secret;
         } else {
-            var hash = secretHash || window.location.hash.slice(1);
+            var hash = secretHash ||  window.parent.location.hash.slice(1);
             if (hash.length === 0 || specialHashes.indexOf(hash) !== -1) {
                 generate();
                 return secret;
@@ -245,10 +248,13 @@ define([
                 if (version === "1") {
                     var mode = hashArray[3];
                     if (mode === 'edit') {
+                        console.log(hashArray);
                         secret.channel = base64ToHex(hashArray[4]);
+                        channel = secret.channel;
                         var keys = Crypto.createEditCryptor(hashArray[5].replace(/-/g, '/'));
                         secret.keys = keys;
                         secret.key = keys.editKeyStr;
+                        console.log(secret);
                         if (secret.channel.length !== 32 || secret.key.length !== 24) {
                             common.alert("The channel key and/or the encryption key is invalid");
                             throw new Error("The channel key and/or the encryption key is invalid");
@@ -306,7 +312,7 @@ define([
             if (!/^#/.test(hash)) { hash = '#' + hash; }
             return void window.history.replaceState({}, window.document.title, hash);
         }
-        window.location.hash = hash;
+         window.parent.location.hash = hash;
     };
 
     var storageKey = common.storageKey = 'CryptPad_RECENTPADS';
@@ -357,7 +363,7 @@ define([
     };
 
     var getHash = common.getHash = function () {
-        return window.location.hash.slice(1);
+        return  window.parent.location.hash.slice(1);
     };
 
     var parsePadUrl = common.parsePadUrl = function (href) {
@@ -406,7 +412,7 @@ define([
             href: href,
             atime: now,
             ctime: now,
-            title: title || window.location.hash.slice(1, 9),
+            title: title ||  window.parent.location.hash.slice(1, 9),
         };
     };
 
@@ -541,7 +547,7 @@ define([
 
     // STORAGE
     var setPadTitle = common.setPadTitle = function (name, cb) {
-        var href = window.location.href;
+        var href =  window.parent.location.href;
         var parsed = parsePadUrl(href);
         getRecentPads(function (err, recent) {
             if (err) {
@@ -603,9 +609,9 @@ define([
 
     // STORAGE
     var getPadTitle = common.getPadTitle = function (cb) {
-        var href = window.location.href;
-        var parsed = parsePadUrl(window.location.href);
-        var hashSlice = window.location.hash.slice(1,9);
+        var href =  window.parent.location.href;
+        var parsed = parsePadUrl(href);
+        var hashSlice =  window.parent.location.hash.slice(1,9);
         var title = '';
 
         getRecentPads(function (err, pads) {
@@ -629,7 +635,7 @@ define([
 
     // STORAGE
     var causesNamingConflict = common.causesNamingConflict = function (title, cb) {
-        var href = window.location.href;
+        var href =  window.parent.location.href;
 
         var parsed = parsePadUrl(href);
         getRecentPads(function (err, pads) {
@@ -752,9 +758,12 @@ define([
         if (title === null) { return; }
 
         if (title.trim() === "") {
-            var parsed = parsePadUrl(window.location.href);
+            var parsed = parsePadUrl( window.parent.location.href);
             title = getDefaultName(parsed);
         }
+
+        var chanId = $('#shareButton').attr('chanid');
+        $.post('/cryptpad/api/pad/' + chanId + '/name/' + title);
 
         common.setPadTitle(title, function (err, data) {
             if (err) {
@@ -842,7 +851,7 @@ define([
                 });
                 if (callback) {
                     button.click(function() {
-                        var href = window.location.href;
+                        var href =  window.parent.location.href;
                         common.confirm(Messages.forgetPrompt, function (yes) {
                             if (!yes) { return; }
                             common.forgetPad(href, function (err, data) {
@@ -879,7 +888,7 @@ define([
                 if (data && data.editHash) {
                     var editHash = data.editHash;
                     button.click(function () {
-                        var baseUrl = window.location.origin + window.location.pathname + '#';
+                        var baseUrl = window.location.origin + '/#';
                         var url = baseUrl + editHash;
                         var success = Clipboard.copy(url);
                         if (success) {
@@ -890,13 +899,20 @@ define([
                     });
                 }
                 break;
+            case 'shareWithUser':
+                button = $('<button>', {
+                    title: 'Partager avec un Utilisateur OpenPaas',
+                    id: 'shareButton',
+                    chanId: channel
+                }).text('Partager avec un Utilisateur');
+                break;
             case 'viewshare':
                 button = $('<button>', {
                     title: Messages.viewShareTitle,
                 }).text(Messages.viewShare);
                 if (data && data.viewHash) {
                     button.click(function () {
-                        var baseUrl = window.location.origin + window.location.pathname + '#';
+                        var baseUrl = window.location.origin + '/#';
                         var url = baseUrl + data.viewHash;
                         var success = Clipboard.copy(url);
                         if (success) {
@@ -913,7 +929,7 @@ define([
                 }).text(Messages.viewOpen);
                 if (data && data.viewHash) {
                     button.click(function () {
-                        var baseUrl = window.location.origin + window.location.pathname + '#';
+                        var baseUrl = window.location.origin + '/#';
                         var url = baseUrl + data.viewHash;
                         common.findOKButton().click();
                         window.open(url);

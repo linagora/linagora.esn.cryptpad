@@ -13,7 +13,7 @@ define([
 
         $('body').append($ta);
 
-        if (!($ta.length && $ta[0].select)) {
+        if (!($ta.length && $ta[0].select)) { 
             // console.log("oops");
             return;
         }

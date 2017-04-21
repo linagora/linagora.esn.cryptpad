@@ -42,6 +42,7 @@ define([
         var websocketUrl = config.websocketURL;
         var userName = config.userName;
         var channel = config.channel;
+        console.log(channel);
         var Crypto = config.crypto;
         var validateKey = config.validateKey;
         var readOnly = config.readOnly || false;
@@ -70,7 +71,7 @@ define([
         };
 
         var onJoining = function(peer) {
-            if(peer.length !== 32) { return; }
+            if(peer.length !== 24) { return; }
             var list = userList.users;
             var index = list.indexOf(peer);
             if(index === -1) {
@@ -80,6 +81,10 @@ define([
         };
 
         var onReady = function(wc, network) {
+
+            if (network.webChannels[0].id) {
+              $('#shareButton').attr('chanId', network.webChannels[0].id);
+            }
             // Trigger onReady only if not ready yet. This is important because the history keeper sends a direct
             // message through "network" when it is synced, and it triggers onReady for each channel joined.
             if (!initializing) { return; }

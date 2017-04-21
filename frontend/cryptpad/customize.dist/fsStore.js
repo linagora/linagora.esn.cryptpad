@@ -1,9 +1,9 @@
 define([
-    '/cryptpad/cryptpad/customize.dist.new/messages.js?app=fs',
+    '/cryptpad/cryptpad/customize.dist/messages.js?app=fs',
     '/bower_components/chainpad-listmap/chainpad-listmap.js',
     '/bower_components/chainpad-crypto/crypto.js',
     '/bower_components/textpatcher/TextPatcher.amd.js',
-    '/cryptpad/cryptpad/file.new/fileObject.js'
+    '/cryptpad/cryptpad/file/fileObject.js'
 ], function (Messages, Listmap, Crypto, TextPatcher, FO) {
     /*
         This module uses localStorage, which is synchronous, but exposes an

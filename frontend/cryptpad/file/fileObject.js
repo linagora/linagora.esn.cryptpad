@@ -1,5 +1,5 @@
 define([
-    '/cryptpad/cryptpad/customize.dist.new/messages.js',
+    '/cryptpad/cryptpad/customize.dist/messages.js',
     '/bower_components/jquery/dist/jquery.min.js',
 ], function (Messages) {
     var $ = window.jQuery;

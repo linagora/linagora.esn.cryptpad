@@ -21,6 +21,10 @@ define(function () {
     ].join('');
 
     out.common_connectionLost = 'Server Connection Lost';
+    out.websocketError = 'Unable to connect to the websocket server...';
+
+    out.loading = "Loading...";
+    out.error = "Error";
 
     out.disconnected = 'Disconnected';
     out.synchronizing = 'Synchronizing';
@@ -29,8 +33,8 @@ define(function () {
     out.readonly = 'Read only';
     out.anonymous = "Anonymous";
     out.yourself = "Yourself";
-    out.anonymousUsers = "anonymous users";
-    out.anonymousUser = "anonymous user";
+    out.anonymousUsers = "anonymous editors";
+    out.anonymousUser = "anonymous editor";
     out.shareView = "Read-only URL";
     out.shareEdit = "Edit URL";
     out.users = "Users";
@@ -106,12 +110,12 @@ define(function () {
 
     out.tryIt = 'Try it out!';
     out.recentPads = 'Your recent pads (stored only in your browser)';
+    out.recentPadsIframe = 'Your recent pads';
 
     out.okButton = 'OK (enter)';
-    out.cancelButton = 'Cancel (esc)';
 
-    out.loginText = '<p>Your username and password are used to generate a unique key which is never known by our server.</p>\n' +
-                    '<p>Be careful not to forget your credentials, as they are impossible to recover</p>';
+    out.cancel = "cancel";
+    out.cancelButton = 'Cancel (esc)';
 
     out.forget = "Forget";
 
@@ -130,6 +134,12 @@ define(function () {
     out.wizardLog = "Click the button in the top left to return to your poll";
     out.wizardTitle = "Use the wizard to create your poll";
     out.wizardConfirm = "Are you really ready to add these options to your poll?";
+
+    out.poll_publish_button = "Publish";
+    out.poll_admin_button = "Admin";
+    out.poll_create_user = "Add a new user";
+    out.poll_create_option = "Add a new option";
+    out.poll_commit = "Commit";
 
     out.poll_closeWizardButton = "Close wizard";
     out.poll_closeWizardButtonTitle = "Close wizard";
@@ -157,7 +167,99 @@ define(function () {
     out.poll_editUserTitle = "Edit the column";
 
     out.poll_titleHint = "Title";
-    out.poll_descriptionHint = "Description";
+    out.poll_descriptionHint = "Describe your poll, and use the 'publish' button when you're done. Anyone with the link can change the description, but this is discouraged.";
+
+    // File manager
+
+    out.fm_rootName = "My documents";
+    out.fm_trashName = "Trash";
+    out.fm_unsortedName = "Unsorted files";
+    out.fm_filesDataName = "All files";
+    out.fm_templateName = "Templates";
+    out.fm_newFolder = "New folder";
+    out.fm_newFolderButton = "NEW FOLDER";
+    out.fm_folderName = "Folder name";
+    out.fm_numberOfFolders = "# of folders";
+    out.fm_numberOfFiles = "# of files";
+    out.fm_fileName = "File name";
+    out.fm_title = "Title";
+    out.fm_lastAccess = "Last access";
+    out.fm_creation = "Creation";
+    out.fm_forbidden = "Forbidden action";
+    out.fm_originalPath = "Original path";
+    out.fm_emptyTrashDialog = "Are you sure you want to empty the trash?";
+    out.fm_removeSeveralPermanentlyDialog = "Are you sure you want to remove these {0} elements from the trash permanently?";
+    out.fm_removePermanentlyDialog = "Are you sure you want to remove {0} permanently?";
+    out.fm_removeSeveralDialog = "Are you sure you want to move these {0} elements to the trash?";
+    out.fm_removeDialog = "Are you sure you want to move {0} to the trash?";
+    out.fm_restoreDialog = "Are you sure you want to restore {0} to its previous location?";
+    out.fm_unknownFolderError = "The selected or last visited directory no longer exist. Opening the parent folder...";
+    out.fm_contextMenuError = "Unable to open the context menu for that element. If the problem persist, try to reload the page.";
+    out.fm_selectError = "Unable to select the targetted element. If the problem persist, try to reload the page.";
+    out.fm_info_root = "Create as many nested folders here as you want to sort your files.";
+    out.fm_info_unsorted = 'Contains all the files you\'ve visited that are not yet sorted in "My Documents" or moved to the "Trash".'; // "My Documents" should match with the "out.fm_rootName" key, and "Trash" with "out.fm_trashName"
+    out.fm_info_trash = 'Files deleted from the trash are also removed from "All files" and it is impossible to recover them from the file manager.'; // Same here for "All files" and "out.fm_filesDataName"
+    out.fm_info_allFiles = 'Contains all the files from "My Documents", "Unsorted" and "Trash". You can\'t move or remove files from here.'; // Same here
+    // File - Context menu
+    out.fc_newfolder = "New folder";
+    out.fc_rename = "Rename";
+    out.fc_open = "Open";
+    out.fc_delete = "Delete";
+    out.fc_restore = "Restore";
+    out.fc_remove = "Delete permanently";
+    out.fc_empty = "Empty the trash";
+    out.fc_newpad = "New text pad";
+    out.fc_newcode = "New code pad";
+    out.fc_newslide = "New presentation";
+    out.fc_newpoll = "New poll";
+    out.fc_prop = "Properties";
+    // fileObject.js (logs)
+    out.fo_moveUnsortedError = "You can't move a folder to the list of unsorted pads";
+    out.fo_existingNameError = "Name already used in that directory. Please choose another one.";
+    out.fo_moveFolderToChildError = "You can't move a folder into one of its descendants";
+    out.fo_unableToRestore = "Unable to restore that file to its original location. You can try to move it to a new location.";
+    out.fo_unavailableName = "A file or a folder with the same name already exist at the new location. Rename the element and try again.";
+
+    // login
+    out.login_login = "log in";
+    out.login_register = "register";
+    out.logoutButton = "log out";
+
+    out.login_migrate = "Would you like to migrate existing data from your anonymous session?";
+
+    out.username_label = "Username: ";
+    out.displayname_label = "Display name: ";
+
+    out.login_username = "your username";
+    out.login_password = "your password";
+    out.login_confirm = "confirm your password";
+    out.login_remember = "remember me";
+
+    out.login_cancel_prompt = "...or if you may have entered the wrong username or password, cancel to try again.";
+
+    out.login_registerSuccess = "registered successfully. Make sure you don't forget your password!";
+    out.login_passwordMismatch = "The two passwords you entered do not match. Try again";
+
+    out.login_warning = [
+        '<h1 id="warning">WARNING</h1>',
+        '<p>Cryptpad stores your personal information in an encrypted realtime document, as it does with all other types of realtime documents.</p>',
+        '<p>Your username and password are never sent to the server in an unencrypted form.</p>',
+        '<p>As such, if you forget your username or password, there is absolutely nothing that we can do to recover your lost information.</p>',
+        '<p><strong>Make sure you do not forget your username and password!</strong></p>',
+    ].join('\n');
+
+    out.login_logout = [
+        //'<p>It seems you are already logged in</p>',
+        //'<p>Would you like to log out and authenticate as another user?</p>',
+    ].join('\n');
+
+    out.login_hashing = "Hashing your password, this might take some time.";
+
+    out.login_no_user = "There is no user associated with the username and password that you entered.";
+    out.login_confirm_password = "Re-enter your password to register...";
+
+    out.loginText = '<p>Your username and password are used to generate a unique key which is never known by our server.</p>\n' +
+                    '<p>Be careful not to forget your credentials, as they are impossible to recover</p>';
 
     // index.html
 
@@ -166,19 +268,19 @@ define(function () {
     out.main_howitworks = 'How It Works';
     out.main_howitworks_p1 = 'CryptPad uses a variant of the <a href="https://en.wikipedia.org/wiki/Operational_transformation">Operational transformation</a> algorithm which is able to find distributed consensus using a <a href="https://bitcoin.org/bitcoin.pdf">Nakamoto Blockchain</a>, a construct popularized by <a href="https://en.wikipedia.org/wiki/Bitcoin">Bitcoin</a>. This way the algorithm can avoid the need for a central server to resolve Operational Transform Edit Conflicts and without the need for resolving conflicts, the server can be kept unaware of the content which is being edited on the pad.';
     out.main_about = 'About';
-    out.main_about_p1 = 'You can read more about our <a href="/privacy.html" title="">privacy policy</a> and <a href="/terms.html">terms of service</a>.';
-
+    out.main_about_p1 = 'You can read more about <a href="/about.html">how CryptPad works</a>, our <a href="/privacy.html" title="">privacy policy</a> and <a href="/terms.html">terms of service</a>.';
     out.main_about_p2 = 'If you have any questions or comments, you can <a href="https://twitter.com/cryptpad">tweet us</a>, open an issue <a href="https://github.com/xwiki-labs/cryptpad/issues/" title="our issue tracker">on github</a>, come say hi on irc (<a href="http://webchat.freenode.net?channels=%23cryptpad&uio=MT1mYWxzZSY5PXRydWUmMTE9Mjg3JjE1PXRydWUe7" title="freenode webchat">irc.freenode.net</a>), or <a href="mailto:research@xwiki.com">send us an email</a>.';
+    out.main_openFileManager = 'Open in a new tab';
 
     out.table_type = 'Type';
     out.table_link = 'Link';
     out.table_created = 'Created';
     out.table_last = 'Last Accessed';
 
-    out.button_newpad = 'CREATE NEW WYSIWYG PAD';
-    out.button_newcode = 'CREATE NEW CODE PAD';
-    out.button_newpoll = 'CREATE NEW POLL';
-    out.button_newslide = 'CREATE NEW PRESENTATION';
+    out.button_newpad = 'NEW RICH TEXT PAD';
+    out.button_newcode = 'NEW CODE PAD';
+    out.button_newpoll = 'NEW POLL';
+    out.button_newslide = 'NEW PRESENTATION';
 
     // privacy.html
 
@@ -212,12 +314,12 @@ define(function () {
 
     // BottomBar.html
 
-    out.bottom_france = '<a href="http://www.xwiki.com/" target="_blank" rel="noopener noreferrer">Made with <img class="bottom-bar-heart" src="/customize/heart.png" /> in <img class="bottom-bar-fr" src="/customize/fr.png" /></a>';
+    out.bottom_france = '<a href="http://www.xwiki.com/" target="_blank" rel="noopener noreferrer">Made with <img class="bottom-bar-heart" src="/customize/heart.png" alt="love" /> in <img class="bottom-bar-fr" src="/customize/fr.png" alt="France" /></a>';
     out.bottom_support = '<a href="http://labs.xwiki.com/" title="XWiki Labs" target="_blank" rel="noopener noreferrer">An <img src="/customize/logo-xwiki2.png" alt="XWiki SAS" class="bottom-bar-xwiki"/> Labs Project </a> with the support of <a href="http://ng.open-paas.org/" title="OpenPaaS::ng" target="_blank" rel="noopener noreferrer"> <img src="/customize/openpaasng.png" alt="OpenPaaS-ng" class="bottom-bar-openpaas" /></a>';
 
     // Header.html
 
-    out.header_france = '<a href="http://www.xwiki.com/" target="_blank" rel="noopener noreferrer">With <img class="bottom-bar-heart" src="/customize/heart.png" /> from <img class="bottom-bar-fr" src="/customize/fr.png" title="France" alt="France"/> by <img src="/customize/logo-xwiki.png" alt="XWiki SAS" class="bottom-bar-xwiki"/></a>';
+    out.header_france = '<a href="http://www.xwiki.com/" target="_blank" rel="noopener noreferrer">With <img class="bottom-bar-heart" src="/customize/heart.png" alt="love" /> from <img class="bottom-bar-fr" src="/customize/fr.png" title="France" alt="France"/> by <img src="/customize/logo-xwiki.png" alt="XWiki SAS" class="bottom-bar-xwiki"/></a>';
 
 
     // TODO Hardcode cause YOLO

@@ -1,20 +1,27 @@
-define(['./languageSelector.js',
-        './translations/messages.js',
-        './translations/messages.es.js',
-        './translations/messages.fr.js',
+define(['/cryptpad/cryptpad/customize.dist/languageSelector.js',
+        '/cryptpad/cryptpad/customize.dist/translations/messages.js',
+        '/cryptpad/cryptpad/customize.dist/translations/messages.es.js',
+        '/cryptpad/cryptpad/customize.dist/translations/messages.fr.js',
 
     // 1) additional translation files can be added here...
+        '/cryptpad/cryptpad/customize.dist/translations/messages.pl.js',
+        '/cryptpad/cryptpad/customize.dist/translations/messages.de.js',
+        '/cryptpad/cryptpad/customize.dist/translations/messages.pt-br.js',
+
 
         '/bower_components/jquery/dist/jquery.min.js'],
 
     // 2) name your language module here...
-        function(LS, Default, Spanish, French) {
+        function(LS, Default, Spanish, French, Polish, German, BrPortuguese) {
     var $ = window.jQuery;
 
     // 3) add your module to this map so it gets used
     var map = {
         'fr': French,
         'es': Spanish,
+        'pl': Polish,
+        'de': German,
+        'pt-br': BrPortuguese,
     };
 
     var defaultLanguage = 'en';
@@ -69,17 +76,27 @@ define(['./languageSelector.js',
         });
     };
 
+    var translateText = function (i, e) {
+        var $el = $(e);
+        var key = $el.data('localization');
+        $el.html(messages[key]);
+    };
+    var translateTitle = function (i, e) {
+        var $el = $(this);
+        var key = $el.data('localization-title');
+        $el.attr('title', messages[key]);
+    };
+    var translatePlaceholder = function (i, e) {
+        var $el = $(this);
+        var key = $el.data('localization-placeholder');
+        $el.attr('placeholder', messages[key]);
+    };
     messages._applyTranslation = function () {
-        $('[data-localization]').each(function (i, e) {
-            var $el = $(this);
-            var key = $el.data('localization');
-            $el.html(messages[key]);
-        });
-        $('[data-localization-title]').each(function (i, e) {
-            var $el = $(this);
-            var key = $el.data('localization-title');
-            $el.attr('title', messages[key]);
-        });
+        $('[data-localization]').each(translateText);
+        $('#pad-iframe').contents().find('[data-localization]').each(translateText);
+        $('[data-localization-title]').each(translateTitle);
+        $('[data-localization-placeholder]').each(translatePlaceholder);
+        $('#pad-iframe').contents().find('[data-localization-title]').each(translateTitle);
     };
 
     // Non translatable keys
@@ -118,6 +135,7 @@ define(['./languageSelector.js',
         '\n',
         '# How to use\n',
         '1. Write your slides content using markdown syntax\n',
+        '  - Learn more about markdown syntax [here](http://www.markdowntutorial.com/)\n',
         '2. Separate your slides with ---\n',
         '3. Click on the "Play" button to see the result'
     ].join('');

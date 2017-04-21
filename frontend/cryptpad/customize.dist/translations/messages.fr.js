@@ -3,7 +3,7 @@ define(function () {
 
     out._languageName = "Français";
 
-    out.main_title = "Cryptpad: Editeur collaboratif en temps réel, zero knowledge";
+    out.main_title = "Cryptpad: Éditeur collaboratif en temps réel, zero knowledge";
     out.main_slogan = "L'unité est la force, la collaboration est la clé";
 
     out.type = {};
@@ -19,6 +19,10 @@ define(function () {
     ].join('');
 
     out.common_connectionLost = 'Connexion au serveur perdue';
+    out.websocketError = 'Impossible de se connecter au serveur WebSocket...';
+
+    out.loading = "Chargement...";
+    out.error = "Erreur";
 
     out.disconnected = 'Déconnecté';
     out.synchronizing = 'Synchronisation';
@@ -27,8 +31,8 @@ define(function () {
     out.readonly = 'Lecture seule';
     out.anonymous = "Anonyme";
     out.yourself = "Vous-même";
-    out.anonymousUsers = "utilisateurs anonymes";
-    out.anonymousUser = "utilisateur anonyme";
+    out.anonymousUsers = "éditeurs anonymes";
+    out.anonymousUser = "éditeur anonyme";
     out.shareView = "URL de lecture seule";
     out.shareEdit = "URL d'édition";
     out.users = "Utilisateurs";
@@ -104,6 +108,7 @@ define(function () {
 
     out.tryIt = 'Essayez-le !';
     out.recentPads = 'Vos documents récents (stockés uniquement dans votre navigateur)';
+    out.recentPadsIframe = 'Vos documents récents';
 
     out.okButton = 'OK (Entrée)';
     out.cancelButton = 'Annuler (Echap)';
@@ -119,7 +124,7 @@ define(function () {
     out.poll_subtitle = "Planification de rendez-vous et sondages en <em>temps-réel</em> et Zero Knowledge";
 
     out.poll_p_save = "Vos modifications sont mises à jour instantanément, donc vous n'avez jamais besoin de sauver le contenu.";
-    out.poll_p_encryption = "Tout ce que vous entrez est crypté donc seules les personnes possédant le lien du sondage y ont accès. Même le serveur ne peut pas voir le contenu.";
+    out.poll_p_encryption = "Tout ce que vous entrez est chiffré donc seules les personnes possédant le lien du sondage y ont accès. Même le serveur ne peut pas voir le contenu.";
     out.poll_p_howtouse = "Entrez votre nom dans le champ ci-dessous et cochez les cases lorsque les options vous conviennent.";
 
     out.promptName = "Quel est votre nom ?";
@@ -128,6 +133,12 @@ define(function () {
     out.wizardLog = "Cliquez sur le bouton dans le coin supérieur gauche pour retourner au sondage";
     out.wizardTitle = "Utiliser l'assistant pour créer votre sondage";
     out.wizardConfirm = "Êtes-vous vraiment prêt à ajouter ces options au sondage ?";
+
+    out.poll_publish_button = "Publier";
+    out.poll_admin_button = "Administrer";
+    out.poll_create_user = "Ajouter un utilisateur";
+    out.poll_create_option = "Ajouter une option";
+    out.poll_commit = "Valider";
 
     out.poll_closeWizardButton = "Fermer l'assistant";
     out.poll_closeWizardButtonTitle = "Fermer l'assistant";
@@ -157,6 +168,56 @@ define(function () {
     out.poll_titleHint = "Titre";
     out.poll_descriptionHint = "Description";
 
+    // File manager
+
+    out.fm_rootName = "Mes documents";
+    out.fm_trashName = "Corbeille";
+    out.fm_unsortedName = "Fichiers non triés";
+    out.fm_filesDataName = "Tous les fichiers";
+    out.fm_newFolder = "Nouveau dossier";
+    out.fm_newFolderButton = "NOUVEAU DOSSIER";
+    out.fm_folderName = "Nom du dossier";
+    out.fm_numberOfFolders = "# de dossiers";
+    out.fm_numberOfFiles = "# de fichiers";
+    out.fm_fileName = "Nom du fichier";
+    out.fm_title = "Titre";
+    out.fm_lastAccess = "Dernier accès";
+    out.fm_creation = "Création";
+    out.fm_forbidden = "Action interdite";
+    out.fm_originalPath = "Chemin d'origine";
+    out.fm_emptyTrashDialog = "Êtes-vous sûr de vouloir vider la corbeille ?";
+    out.fm_removeSeveralPermanentlyDialog = "Êtes-vous sûr de vouloir supprimer ces {0} éléments de manière permanente ?";
+    out.fm_removePermanentlyDialog = "Êtes-vous sûr de vouloir supprimer {0} de manière permanente ?";
+    out.fm_restoreDialog = "Êtes-vous sûr de vouloir restaurer {0} à son emplacement précédent ?";
+    out.fm_removeSeveralDialog = "Êtes-vous sûr de vouloir déplacer ces {0} éléments vers la corbeille ?";
+    out.fm_removeDialog = "Êtes-vous sûr de vouloir déplacer {0} vers la corbeille ?";
+    out.fm_unknownFolderError = "Le dossier sélectionné ou le dernier dossier visité n'existe plus. Ouverture du dossier parent...";
+    out.fm_contextMenuError = "Impossible d'ouvrir le menu contextuel pour cet élément. Si le problème persiste, essayez de rechercher la page.";
+    out.fm_selectError = "Impossible de sélectionner l'élément ciblé. Si le problème persiste, essayez de recharger la page.";
+    out.fm_info_root = "Créez ici autant de dossiers que vous le souhaitez pour trier vos fichiers.";
+    out.fm_info_unsorted = 'Contient tous les documents que vous avez ouvert et qui ne sont pas triés dans "Mes documents" ou déplacés vers la "Corbeille".'; // "My Documents" should match with the "out.fm_rootName" key, and "Trash" with "out.fm_trashName"
+    out.fm_info_trash = 'Les fichiers supprimés dans la corbeille sont également enlevés de "Tous les fichiers" et il est impossible de les récupérer depuis l\'explorateur de fichiers.'; // Same here for "All files" and "out.fm_filesDataName"
+    out.fm_info_allFiles = 'Contient tous les fichiers de "Mes documents", "Fichiers non triés" et "Corbeille". Vous ne pouvez pas supprimer ou déplacer des fichiers d\'ici.'; // Same here
+    // File - Context menu
+    out.fc_newfolder = "Nouveau dossier";
+    out.fc_rename = "Renommer";
+    out.fc_open = "Ouvrir";
+    out.fc_delete = "Supprimer";
+    out.fc_restore = "Restaurer";
+    out.fc_remove = "Supprimer définitivement";
+    out.fc_empty = "Vider la corbeille";
+    out.fc_newpad = "Nouveau pad de texte";
+    out.fc_newcode = "Nouveau pad de code";
+    out.fc_newslide = "Nouvelle présentation";
+    out.fc_newpoll = "Nouveau sondage";
+    out.fc_prop = "Propriétés";
+    // fileObject.js (logs)
+    out.fo_moveUnsortedError = "La liste des éléments non triés ne peut pas contenir de dossiers.";
+    out.fo_existingNameError = "Ce nom est déjà utilisé dans ce répertoire. Veuillez en choisir un autre.";
+    out.fo_moveFolderToChildError = "Vous ne pouvez pas déplacer un dossier dans un de ses descendants";
+    out.fo_unableToRestore = "Impossible de restaurer ce fichier à son emplacement d'origine. Vous pouvez essayer de le déplacer à un nouvel emplacement.";
+    out.fo_unavailableName = "Un fichier ou dossier avec le même nom existe déjà au nouvel emplacement. Renommez cet élément avant d'essayer à nouveau.";
+
     // index.html
 
     out.main_p1 = 'CryptPad est l\'éditeur collaboratif en temps réel <strong>zero knowledge</strong>. Le chiffrement est effectué depuis votre navigateur, ce qui protège les données contre le serveur, le cloud, et la NSA. La clé de chiffrement est stockée dans l\'<a href="https://fr.wikipedia.org/wiki/Identificateur_de_fragment">identifieur de fragment</a> de l\'URL qui n\'est jamais envoyée au serveur mais est accessible depuis javascript, de sorte qu\'en partageant l\'URL, vous donnez l\'accès au pad à ceux qui souhaitent participer.';
@@ -166,6 +227,7 @@ define(function () {
     out.main_about = 'À propos';
     out.main_about_p1 = 'Vous pouvez en apprendre davantage sur notre <a href="/privacy.html" title="">politique de confidentialité</a> et nos <a href="/terms.html">conditions d\'utilisation</a>.';
     out.main_about_p2 = 'Si vous avez des questions ou commentaires, vous pouvez <a href="https://twitter.com/cryptpad">nous tweeter</a>, ouvrir une issue sur <a href="https://github.com/xwiki-labs/cryptpad/issues/" title="our issue tracker">Github</a>, venir dire bonjour sur IRC (<a href="http://webchat.freenode.net?channels=%23cryptpad&uio=MT1mYWxzZSY5PXRydWUmMTE9Mjg3JjE1PXRydWUe7" title="freenode webchat">irc.freenode.net</a>), ou <a href="mailto:research@xwiki.com">nous envoyer un email</a>.';
+    out.main_openFileManager = 'Ouvrir dans un nouvel onglet';
 
     out.table_type = 'Type';
     out.table_link = 'Lien';
@@ -195,26 +257,26 @@ define(function () {
     out.policy_ads_p1 = 'Nous n\'affichons pas de publicité en ligne, bien que nous puissions afficher des liens vers les sites des organisations qui financent nos recherches.';
     out.policy_choices = 'Vos choix';
     out.policy_choices_open = 'Notre code est open source, ce qui signifie que vous avez toujours la possibilité d\'héberger votre propre instance de Cryptpad.';
-    out.policy_choices_vpn = 'Si vous souhaitez utiliser notre instance hébergée (cryptpad.fr) mais que vous ne souhaitez pas exposer votre adresse IP, vous pouvez la protéger en utilisant le <a href="https://www.torproject.org/projects/torbrowser.html.en" title="downloads from the Tor project" target="_blank" rel="noopener noreferrer">navigateur Tor</a>, ou un <a href="https://riseup.net/fr/vpn" title="VPNs provided by Riseup" target="_blank" rel="noopener noreferrer">VPN</a>.';
-    out.policy_choices_ads = 'Si vous souhaitez uniquement bloquer notre plateforme d\'analytique, vous pouvez utiliser un bloqueur de publicités tel que <a href="https://www.eff.org/fr/privacybadger" title="download privacy badger" target="_blank" rel="noopener noreferrer">Privacy Badger</a>.';
+    out.policy_choices_vpn = 'Si vous souhaitez utiliser notre instance hébergée (cryptpad.fr) mais que vous ne souhaitez pas exposer votre adresse IP, vous pouvez la protéger en utilisant le <a href="https://www.torproject.org/projects/torbrowser.html.en" title="téléchargements du projet Tor" target="_blank" rel="noopener noreferrer">navigateur Tor</a>, ou un <a href="https://riseup.net/fr/vpn" title="VPNs fournis par Riseup" target="_blank" rel="noopener noreferrer">VPN</a>.';
+    out.policy_choices_ads = 'Si vous souhaitez uniquement bloquer notre plateforme d\'analytique, vous pouvez utiliser un bloqueur de publicités tel que <a href="https://www.eff.org/fr/privacybadger" title="télécharger privacy badger" target="_blank" rel="noopener noreferrer">Privacy Badger</a>.';
 
     // terms.html
 
     out.tos_title = "Conditions d'utilisation de Cryptpad";
     out.tos_legal = "Veuillez ne pas être malveillant, abusif, ou faire quoi que ce soit d'illégal.";
     out.tos_availability = "Nous espérons que vous trouvez ce service utile, mais nous ne pouvons garantir ses performances et disponibilités. Nous vous recommandons d'exporter vos données régurlièrement.";
-    out.tos_e2ee = "Les document sur Cryptpad peuvent être lus et modifiés par quiconque est en mesure de deviner ou d'obtenir de quelque manière que ce soit l'identificateur de fragment (hash) du document. Nous vous recommandons d'utiliser des technologies de messagerie chiffrées de bout à bout (end-to-end encryption ou e2ee) pour partager les URLs, et déclinons toute responsabilité dans le cas ou une telle URL serait divulguée.";
+    out.tos_e2ee = "Les documents sur Cryptpad peuvent être lus et modifiés par quiconque est en mesure de deviner ou d'obtenir de quelque manière que ce soit l'identificateur de fragment du document. Nous vous recommandons d'utiliser des technologies de messagerie chiffrées de bout à bout (end-to-end encryption ou e2ee) pour partager les URLs, et déclinons toute responsabilité dans le cas ou une telle URL serait divulguée.";
     out.tos_logs = "Les meta-données fournies par votre navigateur au serveur peuvent être enregistrées dans le but de maintenir le service.";
     out.tos_3rdparties = "Nous ne fournissons aucune donnée individuelle à des tierces parties à moins d'y être contraints par la loi.";
 
     // BottomBar.html
 
-    out.bottom_france = '<a href="http://www.xwiki.com/fr" target="_blank" rel="noopener noreferrer">Fait avec <img class="bottom-bar-heart" src="/customize/heart.png" /> en <img class="bottom-bar-fr" src="/customize/fr.png" /></a>';
+    out.bottom_france = '<a href="http://www.xwiki.com/fr" target="_blank" rel="noopener noreferrer">Fait avec <img class="bottom-bar-heart" src="/customize/heart.png" alt="amour" /> en <img class="bottom-bar-fr" src="/customize/fr.png" alt="France" /></a>';
     out.bottom_support = '<a href="http://labs.xwiki.com/" title="XWiki Labs" target="_blank" rel="noopener noreferrer">Un projet <img src="/customize/logo-xwiki2.png" alt="XWiki SAS" class="bottom-bar-xwiki"/> Labs</a> avec le soutien de <a href="http://ng.open-paas.org/" title="OpenPaaS::ng" target="_blank" rel="noopener noreferrer"> <img src="/customize/openpaasng.png" alt="OpenPaaS-ng" class="bottom-bar-openpaas" /></a>';
 
     // Header.html
 
-    out.header_france = '<a href="http://www.xwiki.com/fr" target="_blank" rel="noopener noreferrer">Fait avec <img class="bottom-bar-heart" src="/customize/heart.png" /> en <img class="bottom-bar-fr" title="France" alt="France" src="/customize/fr.png" /> par <img src="/customize/logo-xwiki.png" alt="XWiki SAS" class="bottom-bar-xwiki"/></a>';
+    out.header_france = '<a href="http://www.xwiki.com/fr" target="_blank" rel="noopener noreferrer">Fait avec <img class="bottom-bar-heart" src="/customize/heart.png" alt="amour" /> en <img class="bottom-bar-fr" title="France" alt="France" src="/customize/fr.png" /> par <img src="/customize/logo-xwiki.png" alt="XWiki SAS" class="bottom-bar-xwiki"/></a>';
     out.header_support = '<a href="http://ng.open-paas.org/" title="OpenPaaS::ng" target="_blank" rel="noopener noreferrer"> <img src="/customize/openpaasng.png" alt="OpenPaaS-ng" class="bottom-bar-openpaas" /></a>';
     out.header_logoTitle = "Aller vers la page d'accueil";
 

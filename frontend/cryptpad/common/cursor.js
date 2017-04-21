@@ -1,5 +1,5 @@
 define([
-    './treesome.js',
+    '/cryptpad/cryptpad/common/treesome.js',
     '/bower_components/rangy/rangy-core.min.js'
 ], function (Tree, Rangy, saveRestore) {
     //window.Rangy = Rangy;

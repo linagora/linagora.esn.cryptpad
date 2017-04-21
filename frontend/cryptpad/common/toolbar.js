@@ -1,5 +1,5 @@
 define([
-    '/cryptpad/cryptpad/customize.dist.new/messages.js',
+    '/cryptpad/cryptpad/customize.dist/messages.js',
     '/bower_components/jquery/dist/jquery.min.js'
 ], function (Messages) {
     var $ = window.jQuery;
@@ -55,7 +55,7 @@ define([
     var lagErrors = 0;
 
     var styleToolbar = function ($container, href) {
-        href = href || '/cryptpad/cryptpad/customize.dist.new/toolbar.css';
+        href = href || '/cryptpad/cryptpad/customize.dist/toolbar.css';
         $.ajax({
             url: href,
             dataType: 'text',
@@ -273,6 +273,7 @@ define([
             $userElement.html('<span class="' + READONLY_CLS + '">' + Messages.readonly + '</span>');
         }
         else {
+          console.log(userData);
             var name = userData[myUserName] && userData[myUserName].name;
             var icon = '<span class="fa fa-user" style="font-family:FontAwesome;"></span>';
             if (!name) {
@@ -332,7 +333,7 @@ define([
             'class': "cryptpad-link"
         }).appendTo($topContainer);
         var $imgTag = $('<img>', {
-            src: "/cryptpad/cryptpad/customize.dist.new/cryptofist_mini.png",
+            src: "/cryptpad/cryptpad/customize.dist/cryptofist_mini.png",
             alt: "Cryptpad"
         });
 
