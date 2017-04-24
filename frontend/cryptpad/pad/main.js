@@ -308,13 +308,20 @@ define([
 
             var getLastName = function (cb) {
                 Cryptpad.getAttribute('username', function (err, userName) {
+                  if(!userName) {
+                    $.get('/api/user', function(user) {
+                      userName = user.firstname + ' ' + user.lastname;
+                      cb(err, userName || '');
+                    });
+                  } else {
                     cb(err, userName || '');
+                  }
                 });
             };
 
             var setName = module.setName = function (newName) {
                 if (typeof(newName) !== 'string') { return; }
-                var myUserNameTemp = Cryptpad.fixHTML(newName.trim());
+                var myUserNameTemp = Cryptpad.fixHTML(newName);
                 if(myUserNameTemp.length > 32) {
                     myUserNameTemp = myUserNameTemp.substr(0, 32);
                 }
@@ -678,7 +685,6 @@ define([
 
                 getLastName(function (err, lastName) {
                     console.log("Unlocking editor");
-                    console.log(myID);
                     setEditable(true);
                     initializing = false;
                     Cryptpad.removeLoadingScreen(emitResize);

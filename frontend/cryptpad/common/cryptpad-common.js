@@ -248,13 +248,11 @@ define([
                 if (version === "1") {
                     var mode = hashArray[3];
                     if (mode === 'edit') {
-                        console.log(hashArray);
                         secret.channel = base64ToHex(hashArray[4]);
                         channel = secret.channel;
                         var keys = Crypto.createEditCryptor(hashArray[5].replace(/-/g, '/'));
                         secret.keys = keys;
                         secret.key = keys.editKeyStr;
-                        console.log(secret);
                         if (secret.channel.length !== 32 || secret.key.length !== 24) {
                             common.alert("The channel key and/or the encryption key is invalid");
                             throw new Error("The channel key and/or the encryption key is invalid");

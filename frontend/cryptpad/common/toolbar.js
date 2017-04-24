@@ -273,7 +273,6 @@ define([
             $userElement.html('<span class="' + READONLY_CLS + '">' + Messages.readonly + '</span>');
         }
         else {
-          console.log(userData);
             var name = userData[myUserName] && userData[myUserName].name;
             var icon = '<span class="fa fa-user" style="font-family:FontAwesome;"></span>';
             if (!name) {
