@@ -9,8 +9,10 @@
       $scope.isLoaded = false;
 
       $('#editor-iframe').on('load', function(){
-        $timeout(function () {
-          $scope.isLoaded = true;
+        setTimeout(function () {
+          $scope.$apply(function(){
+            $scope.isLoaded = true;
+          });
           $($('#editor-iframe')[0].contentDocument).find('#shareButton').click(function(event) {
             var chanId = $($('#editor-iframe')[0].contentDocument).find('#shareButton').attr('chanid');
             CryptpadRestangular.all('pads').one('pad', chanId).get().then(function(res) {
