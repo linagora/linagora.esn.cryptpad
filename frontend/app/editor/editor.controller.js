@@ -9,17 +9,21 @@
       $scope.isLoaded = false;
 
       $('#editor-iframe').on('load', function(){
-        setTimeout(function () {
-          $scope.$apply(function(){
-            $scope.isLoaded = true;
-          });
-          $($('#editor-iframe')[0].contentDocument).find('#shareButton').click(function(event) {
-            var chanId = $($('#editor-iframe')[0].contentDocument).find('#shareButton').attr('chanid');
-            CryptpadRestangular.all('pads').one('pad', chanId).get().then(function(res) {
-              showPrompt(event, chanId, res.data);
-            })
-          });
-        }, 3000);
+        var buttonIntervel = setInterval(function () {
+          var shareButton = $($('#editor-iframe')[0].contentDocument).find('#shareButton');
+          if(shareButton.length) {
+            clearInterval(buttonIntervel);
+            $scope.$apply(function(){
+              $scope.isLoaded = true;
+            });
+            shareButton.click(function (event) {
+              var chanId = shareButton.attr('chanId');
+              CryptpadRestangular.all('pads').one('pad', chanId).get().then(function(res) {
+                showPrompt(event, chanId, res.data);
+              });
+            });
+          }
+        }, 1000);
       });
 
       function showPrompt(ev, chanId, pad) {
