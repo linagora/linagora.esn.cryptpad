@@ -7,10 +7,6 @@ script.
     };
     
 style(type='text/css').
-  html, body {
-      margin: 0px;
-      padding: 0px;
-  }
   #editor-iframe {
       position:fixed;
       top:70px;
@@ -23,6 +19,13 @@ style(type='text/css').
       margin:0;
       padding:0;
       overflow:hidden;
+  }
+  .fade {
+      transition: all linear 500ms;
+      opacity: 1;
+  }
+  .fade.ng-hide {
+      opacity: 0;
   }
   #feedback {
       display: none;
@@ -48,4 +51,6 @@ style(type='text/css').
       visibility: visible;
   }
 input(type="hidden" id="userToken" value='')
-iframe(id="editor-iframe" src="/cryptpad/app/editor/editor.html")
+iframe.fade.row(id="editor-iframe" src="/cryptpad/app/editor/editor.html" ng-show='isLoaded')
+.row(ng-show='!isLoaded')
+  .text-center(openpaas-logo-spinner, spinner-start-active='1', spinner-size='0.5')

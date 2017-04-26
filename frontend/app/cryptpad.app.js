@@ -6,6 +6,7 @@
     'ui.router',
     'restangular',
     'ngMaterial',
+    'ngAnimate',
     'ngMessages',
     'esn.notification',
     'naturalSort'

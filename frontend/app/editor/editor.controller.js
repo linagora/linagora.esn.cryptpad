@@ -4,20 +4,21 @@
   angular.module('linagora.esn.cryptpad')
     .controller('CryptpadController', cryptpadController)
 
-    function cryptpadController($element, $scope, session, $mdDialog, CryptpadRestangular, notificationFactory) {
+    function cryptpadController($element, $scope, $timeout, $mdDialog, session, CryptpadRestangular, notificationFactory) {
       document.getElementById("userToken").value = session.user._id;
+      $scope.isLoaded = false;
 
       $('#editor-iframe').on('load', function(){
-        setTimeout(function () {
+        $timeout(function () {
+          $scope.isLoaded = true;
           $($('#editor-iframe')[0].contentDocument).find('#shareButton').click(function(event) {
             var chanId = $($('#editor-iframe')[0].contentDocument).find('#shareButton').attr('chanid');
             CryptpadRestangular.all('pads').one('pad', chanId).get().then(function(res) {
               showPrompt(event, chanId, res.data);
             })
           });
-        }, 5000);
+        }, 3000);
       });
-
 
       function showPrompt(ev, chanId, pad) {
         var newScope = $scope.$new();
