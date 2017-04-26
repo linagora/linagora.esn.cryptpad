@@ -45,7 +45,7 @@ define([
         throw new Error("Store is not ready!");
     };
 
-    var getWebsocketURL = common.getWebsocketURL = function (port, path, userId) {
+    var getWebsocketURL = common.getWebsocketURL = function (protocol, port, path, userId, usePort) {
         /*if (!Config.websocketPath) { return Config.websocketURL; }
         var path = Config.websocketPath;
         if (/^ws{1,2}:\/\//.test(path)) { return path; }
@@ -55,7 +55,12 @@ define([
         var url = protocol + '//' + host + path;
 
         return url;*/
-        return 'ws://' + location.hostname + ':'+ port + path + '/' + userId;
+        if(usePort) {
+          return protocol + '://' + location.hostname + ':'+ port + path + '/' + userId;
+        } else {
+          return protocol + '://' + location.hostname + path + '/' + userId;
+        }
+
     };
 
     var userHashKey = common.userHashKey = 'User_hash';

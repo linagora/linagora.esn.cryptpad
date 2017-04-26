@@ -396,7 +396,12 @@ define([
                 initialState: stringifyDOM(inner) || '{}',
 
                 // the websocket URL
-                websocketURL: Cryptpad.getWebsocketURL(Config.websocketPort, Config.websocketPath, userId),
+                websocketURL: Cryptpad.getWebsocketURL(Config.websocketProtocol,
+                                                      Config.websocketPort,
+                                                      Config.websocketPath,
+                                                      userId,
+                                                      Config.usePortInFrontend
+                                                    ),
 
                 // the channel we will communicate over
                 channel: secret.channel,

@@ -6,7 +6,11 @@
 
     "httpPort": 3000,
 
+    "websocketProtocol": "ws",
+
     "websocketPort": 3000,
+
+    "usePortInFrontend": true,
 
     "websocketPath": "/cryptpad_websocket",
 
