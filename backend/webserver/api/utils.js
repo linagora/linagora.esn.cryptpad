@@ -2,12 +2,13 @@
 
 function hexToBase64(hex) {
     var hexArray = hex
-        .replace(/\r|\n/g, "")
-        .replace(/([\da-fA-F]{2}) ?/g, "0x$1 ")
-        .replace(/ +$/, "")
-        .split(" ");
+        .replace(/\r|\n/g, '')
+        .replace(/([\da-fA-F]{2}) ?/g, '0x$1 ')
+        .replace(/ +$/, '')
+        .split(' ');
     var byteString = String.fromCharCode.apply(null, hexArray);
-    return Buffer.from(byteString, 'binary').toString('base64').replace(/\//g, '-').slice(0,-2);
+
+    return Buffer.from(byteString, 'binary').toString('base64').replace(/\//g, '-').slice(0, -2);
 }
 
 module.exports = function() {

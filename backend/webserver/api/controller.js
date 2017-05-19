@@ -19,11 +19,10 @@ module.exports = function(dependencies, lib) {
     addCoAuthor
   };
 
-
   function getAllPadsByUserId(req, res) {
     lib.pad.getAllPadsByUserId(req.params.userId, (err, result) => {
       if (err) {
-        logger.error('Error while getting pads for user %s', params.userId, err);
+        logger.error('Error while getting pads for user %s', req.params.userId, err);
 
         return res.status(500).json({
           error: {
@@ -33,6 +32,7 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
+
       return res.status(200).json(result);
     });
   }
@@ -40,7 +40,7 @@ module.exports = function(dependencies, lib) {
   function getPadsByAuthorId(req, res) {
     lib.pad.getPadsByAuthor(req.params.userId, (err, result) => {
       if (err) {
-        logger.error('Error while getting pads for user %s', params.userId, err);
+        logger.error('Error while getting pads for user %s', req.params.userId, err);
 
         return res.status(500).json({
           error: {
@@ -50,6 +50,7 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
+
       return res.status(200).json(result);
     });
   }
@@ -57,7 +58,7 @@ module.exports = function(dependencies, lib) {
   function getPadsByCoAuthorId(req, res) {
     lib.pad.getPadsByCoAuthor(req.params.userId, (err, result) => {
       if (err) {
-        logger.error('Error while getting pads for user %s', params.userId, err);
+        logger.error('Error while getting pads for user %s', req.params.userId, err);
 
         return res.status(500).json({
           error: {
@@ -67,14 +68,15 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
+
       return res.status(200).json(result);
     });
   }
 
   function deletePad(req, res) {
-    lib.pad.deletePad(req.params.channelId, (err, result) => {
-      if(err) {
-        logger.error('Error while deleting pads : %s', chanId);
+    lib.pad.deletePad(req.params.channelId, err => {
+      if (err) {
+        logger.error('Error while deleting pads : %s', req.params.channelId);
 
         return res.status(500).json({
           error: {
@@ -84,29 +86,13 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
-      return res.status(200).json();
-    })
-  }
 
-  function insertKeys(req, res) {
-    lib.pad.insertKey(req.body.key, req.params.channelId, (err, result) => {
-      if(err) {
-        logger.console.error('Error while updating the pad : %s', req.params.channelId);
-
-        return res.status(500).json({
-          error: {
-            code: 500,
-            message: 'Server Error',
-            details: 'Error while updating pad'
-          }
-        });
-      }
       return res.status(200).json();
     });
   }
 
-  function changePadName(req, res) {
-    lib.pad.changeName(req.params.channelId, req.params.name, (err, result) => {
+  function insertKeys(req, res) {
+    lib.pad.insertKey(req.body.key, req.params.channelId, err => {
       if (err) {
         logger.console.error('Error while updating the pad : %s', req.params.channelId);
 
@@ -118,6 +104,25 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
+
+      return res.status(200).json();
+    });
+  }
+
+  function changePadName(req, res) {
+    lib.pad.changeName(req.params.channelId, req.params.name, err => {
+      if (err) {
+        logger.console.error('Error while updating the pad : %s', req.params.channelId);
+
+        return res.status(500).json({
+          error: {
+            code: 500,
+            message: 'Server Error',
+            details: 'Error while updating pad'
+          }
+        });
+      }
+
       return res.status(200).json();
     });
   }
@@ -155,9 +160,9 @@ module.exports = function(dependencies, lib) {
         }
       };
 
-      emailSender.sendEmail(emailData, function (err, ok) {
+      emailSender.sendEmail(emailData, err => {
         if (err) {
-          res.status(500).json({
+          return res.status(500).json({
             error: {
               code: 500,
               message: 'Error when sending mail',
@@ -165,8 +170,9 @@ module.exports = function(dependencies, lib) {
             }
           });
         }
-        res.status(200).json(result);
-      })
+
+        return res.status(200).json(result);
+      });
     });
   }
 
@@ -183,6 +189,7 @@ module.exports = function(dependencies, lib) {
           }
         });
       }
+
       return res.status(200).json(result);
     });
   }

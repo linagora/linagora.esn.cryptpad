@@ -24,7 +24,7 @@ function sendEmail(sharedPad, done) {
   email.getMailer().sendHTML(message, properties.template, sharedPad, done);
 }
 
-module.exports = function(dependencies, lib) {
+module.exports = function(dependencies) {
   email = dependencies('email');
 
   return {

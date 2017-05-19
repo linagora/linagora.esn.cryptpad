@@ -2,10 +2,9 @@
 
 module.exports = function(grunt) {
   grunt.initConfig({
-    jshint: {
+    eslint: {
       options: {
-        jshintrc: '.jshintrc',
-        ignores: []
+        jshintrc: '.eslintrc'
       },
       all: {
         src: [
@@ -17,14 +16,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-    jscs: {
-      options: {
-        config: '.jscsrc'
-      },
-      all: {
-        src: ['<%= jshint.all.src %>']
-      }
-    },
     lint_pattern: {
       options: {
         rules: [
@@ -32,7 +23,7 @@ module.exports = function(grunt) {
         ]
       },
       all: {
-        src: ['<%= jshint.all.src %>']
+        src: ['<%= eslint.all.src %>']
       },
       css: {
         options: {
@@ -63,6 +54,25 @@ module.exports = function(grunt) {
         configFile: './test/config/karma.conf.js',
         browsers: ['PhantomJS']
       }
+    },
+
+    i18n_checker: {
+      all: {
+        options: {
+          baseDir: __dirname,
+          dirs: [{
+            localeDir: 'backend/lib/i18n/locales',
+            templateSrc: [
+              'frontend/app/**/*.jade'
+            ],
+            core: true
+          }],
+          verifyOptions: {
+            defaultLocale: 'en',
+            locales: ['en', 'fr', 'vi']
+          }
+        }
+      }
     }
   });
 
@@ -71,8 +81,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-eslint');
+  grunt.loadNpmTasks('grunt-i18n-checker');
 
-  grunt.registerTask('linters', 'Check code for lint', ['jshint:all', 'jscs:all', 'lint_pattern']);
+grunt.registerTask('i18n', 'Check the translation files', ['i18n_checker']);
+  grunt.registerTask('linters', 'Check code for lint', ['eslint:all', 'lint_pattern:all', 'i18n']);
   grunt.registerTask('test-unit-backend', 'Test backend code', ['mochacli:backend']);
   grunt.registerTask('test-unit-frontend', 'Test frontend code', ['karma:unit']);
   grunt.registerTask('test', ['linters', 'test-unit-frontend', 'test-unit-backend']);

@@ -8,7 +8,7 @@ function passThrough(req, res, next) {
 }
 
 function hasPermissions(req, res, next) {
-  libPad.pad.isCreator(req.params.channelId, req.user._id, (err ,res) => {
+  libPad.pad.isCreator(req.params.channelId, req.user._id, (err, res) => {
     if (err) {
       return res.status(500).json({
         error: {
@@ -35,7 +35,8 @@ function hasPermissions(req, res, next) {
 
 module.exports = function(dependencies, lib) {
   logger = dependencies('logger');
-  libPad = lib
+  libPad = lib;
+
   return {
     passThrough: passThrough,
     hasPermissions: hasPermissions

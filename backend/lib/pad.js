@@ -1,10 +1,8 @@
 'use strict';
 
-
 const CONSTANTS = require('../lib/constants');
 
 const SKIP_FIELDS = CONSTANTS.SKIP_FIELDS;
-
 
 module.exports = function(dependencies) {
 
@@ -16,70 +14,70 @@ module.exports = function(dependencies) {
   }
 
   function getPadById(chanId, callback) {
-    return padModel.findOne({'channel': chanId}).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
+    return padModel.findOne({channel: chanId}).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
   }
 
   function getAllPadsByUserId(userId, callback) {
-    return padModel.find({$or: [{'author': userId}, {'coAuthor': userId}] }).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
+    return padModel.find({$or: [{author: userId}, {coAuthor: userId}] }).populate('author coAuthor', SKIP_FIELDS.USER).exec(callback);
   }
 
   function getPadsByAuthor(userId, callback) {
-    return padModel.find({'author': userId}).exec(callback);
+    return padModel.find({author: userId}).exec(callback);
   }
 
   function getPadsByCoAuthor(userId, callback) {
-    return padModel.find({'coAuthor': userId}).exec(callback);
+    return padModel.find({coAuthor: userId}).exec(callback);
   }
 
-  function insertMessage(chanId , msg, callback) {
-    return padModel.findOneAndUpdate({'channel': chanId},
-      {$push: {'messages': msg}},
+  function insertMessage(chanId, msg, callback) {
+    return padModel.findOneAndUpdate({channel: chanId},
+      {$push: {messages: msg}},
       {new: true, safe: true, upsert: true},
       callback
     );
   }
 
   function insertValidateKey(validateKey, chanId, callback) {
-    return padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'validateKey': validateKey[0], 'key': validateKey[1]}},
+    return padModel.findOneAndUpdate({channel: chanId},
+      {$set: {validateKey: validateKey[0], key: validateKey[1]}},
       {new: true, safe: true, upsert: true},
       callback
     );
   }
 
   function insertKey(key, chanId, callback) {
-    return padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'key': key}},
-      {new: true, safe:true, upsert: true},
+    return padModel.findOneAndUpdate({channel: chanId},
+      {$set: {key: key}},
+      {new: true, safe: true, upsert: true},
       callback
     );
   }
 
   function insertCoAuthor(coAuthorId, chanId, callback) {
-    return padModel.findOneAndUpdate({'channel': chanId},
-      {$push: {'coAuthor': coAuthorId}},
+    return padModel.findOneAndUpdate({channel: chanId},
+      {$push: {coAuthor: coAuthorId}},
       callback
     );
   }
 
   function setCoAuthors(coAuthors, chanId, callback) {
-    padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'coAuthor': coAuthors}},
+    padModel.findOneAndUpdate({channel: chanId},
+      {$set: {coAuthor: coAuthors}},
       {new: true}
     ).populate('author coAuthor').exec(callback);
   }
 
   function deletePad(chanId, callback) {
-    return padModel.findOneAndRemove({"channel": chanId}, callback);
+    return padModel.findOneAndRemove({channel: chanId}, callback);
   }
 
   function isCreator(chanId, userId, callback) {
-    return padModel.findOne({'channel': chanId, 'author': userId}).exec(callback);
+    return padModel.findOne({channel: chanId, author: userId}).exec(callback);
   }
 
   function changeName(chanId, padName, callback) {
-    return padModel.findOneAndUpdate({'channel': chanId},
-      {$set: {'name': padName}},
+    return padModel.findOneAndUpdate({channel: chanId},
+      {$set: {name: padName}},
       callback
     );
   }

@@ -5,7 +5,7 @@ var i18n = require('i18n');
 i18n.configure(
   {
     defaultLocale: 'en',
-    locales: ['en', 'fr', 'vi'],
+    locales: ['en'],
     directory: __dirname + '/locales',
     updateFiles: false,
     indent: '  ',
@@ -14,6 +14,6 @@ i18n.configure(
   }
 );
 
-module.exports = function(dependencies) {
+module.exports = function() {
   return i18n;
 };

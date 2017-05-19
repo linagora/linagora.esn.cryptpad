@@ -8,7 +8,7 @@ module.exports = function(dependencies, lib, router) {
 
   router.get('/pad/:userId', authorizationMW.requiresAPILogin, controller.getAllPadsByUserId);
 
-  router.get('/pads/pad/:channelId', authorizationMW.requiresAPILogin, controller.getPad)
+  router.get('/pads/pad/:channelId', authorizationMW.requiresAPILogin, controller.getPad);
 
   router.post('/pad/:channelId/key', authorizationMW.requiresAPILogin, controller.insertKeys);
 
