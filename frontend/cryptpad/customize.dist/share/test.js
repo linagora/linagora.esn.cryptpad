@@ -1,6 +1,6 @@
 define([
     '/customize/share/frame.js',
-    '/bower_components/jquery/dist/jquery.min.js',
+    '/cryptpad/components/jquery/dist/jquery.min.js',
 ], function (Frame) {
     var $ = window.jQuery;
 
@@ -123,4 +123,3 @@ define([
         }].forEach(runTest);
     });
 });
-

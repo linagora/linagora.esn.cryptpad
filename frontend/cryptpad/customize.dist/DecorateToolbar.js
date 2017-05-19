@@ -4,7 +4,7 @@
 define([
     '/customize/languageSelector.js',
     '/customize/messages.js',
-    '/bower_components/jquery/dist/jquery.min.js'
+    '/cryptpad/components/jquery/dist/jquery.min.js'
 ], function (LS, Messages) {
     var $ = window.jQuery;
     var main = function () {

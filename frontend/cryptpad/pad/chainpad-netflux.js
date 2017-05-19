@@ -15,8 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 define([
-    '/bower_components/netflux-websocket/netflux-client.js',
-    '/bower_components/chainpad/chainpad.dist.js',
+    '/cryptpad/components/netflux-websocket/netflux-client.js',
+    '/cryptpad/components/chainpad/chainpad.dist.js',
 ], function (Netflux) {
     var ChainPad = window.ChainPad;
     var PARANOIA = true;

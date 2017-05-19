@@ -1,4 +1,4 @@
-define(['/bower_components/jquery/dist/jquery.min.js'], function() {
+define(['/cryptpad/components/jquery/dist/jquery.min.js'], function() {
     var $ = window.jQuery;
     var out = {};
 

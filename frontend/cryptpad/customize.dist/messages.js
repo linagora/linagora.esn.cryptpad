@@ -9,7 +9,7 @@ define(['/cryptpad/cryptpad/customize.dist/languageSelector.js',
         '/cryptpad/cryptpad/customize.dist/translations/messages.pt-br.js',
 
 
-        '/bower_components/jquery/dist/jquery.min.js'],
+        '/cryptpad/components/jquery/dist/jquery.min.js'],
 
     // 2) name your language module here...
         function(LS, Default, Spanish, French, Polish, German, BrPortuguese) {

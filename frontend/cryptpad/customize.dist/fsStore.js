@@ -1,8 +1,8 @@
 define([
     '/cryptpad/cryptpad/customize.dist/messages.js?app=fs',
-    '/bower_components/chainpad-listmap/chainpad-listmap.js',
-    '/bower_components/chainpad-crypto/crypto.js',
-    '/bower_components/textpatcher/TextPatcher.amd.js',
+    '/cryptpad/components/chainpad-listmap/chainpad-listmap.js',
+    '/cryptpad/components/chainpad-crypto/crypto.js',
+    '/cryptpad/components/textpatcher/TextPatcher.amd.js',
     '/cryptpad/cryptpad/file/fileObject.js'
 ], function (Messages, Listmap, Crypto, TextPatcher, FO) {
     /*

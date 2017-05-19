@@ -1,10 +1,10 @@
 define([
     '/customize/messages.js?app=cryptget',
-    '/bower_components/chainpad-crypto/crypto.js',
-    '/bower_components/chainpad-netflux/chainpad-netflux.js',
+    '/cryptpad/components/chainpad-crypto/crypto.js',
+    '/cryptpad/cryptpad/pad/chainpad-netflux.js',
     '/common/cryptpad-common.js',
-    '/bower_components/textpatcher/TextPatcher.js',
-    '/bower_components/jquery/dist/jquery.min.js',
+    '/cryptpad/components/textpatcher/TextPatcher.js',
+    '/cryptpad/components/jquery/dist/jquery.min.js',
 ], function (Messages, Crypto, Realtime, Cryptpad, TextPatcher) {
     var noop = function () {};
     var finish = function (S, err, doc) {

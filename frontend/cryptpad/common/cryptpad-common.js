@@ -1,14 +1,14 @@
 define([
     '/cryptpad/cryptpad/customize.dist/messages.js',
     '/cryptpad/cryptpad/customize.dist/store.js',
-    '/bower_components/chainpad-crypto/crypto.js',
-    '/bower_components/alertifyjs/dist/js/alertify.js',
-    '/bower_components/spin.js/spin.min.js',
+    '/cryptpad/components/chainpad-crypto/crypto.js',
+    '/cryptpad/components/alertifyjs/dist/js/alertify.js',
+    '/cryptpad/components/spin.js/spin.min.js',
     '/cryptpad/cryptpad/common/clipboard.js',
     '/cryptpad/cryptpad/customize.dist/fsStore.js',
     '/cryptpad/cryptpad/customize.dist/application_config.js',
 
-    '/bower_components/jquery/dist/jquery.min.js',
+    '/cryptpad/components/jquery/dist/jquery.min.js',
 ], function (Messages, Store, Crypto, Alertify, Spinner, Clipboard, FS, AppConfig) {
 /*  This file exposes functionality which is specific to Cryptpad, but not to
     any particular pad type. This includes functions for committing metadata

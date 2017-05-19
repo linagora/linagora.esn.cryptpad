@@ -164,7 +164,7 @@
     else if ((typeof(define) !== 'undefined' && define !== null) &&
             (define.amd !== null)) {
         define([
-            '/bower_components/jquery/dist/jquery.min.js',
+            '/cryptpad/components/jquery/dist/jquery.min.js',
         ], function () {
             return Frame;
         });

@@ -1,23 +1,26 @@
-require.config({ paths: { 'json.sortify': '/bower_components/json.sortify/dist/JSON.sortify',
-                          'config': '/cryptpad/cryptpad/config/config'} });
+require.config({
+  paths: { 'json.sortify': '/cryptpad/components/json.sortify/dist/JSON.sortify',
+                          'config': '/cryptpad/cryptpad/config/config'
+         }
+});
 define([
     '/cryptpad/cryptpad/customize.dist/messages.js?app=pad',
-    '/bower_components/chainpad-crypto/crypto.js',
+    '/cryptpad/components/chainpad-crypto/crypto.js',
     '/cryptpad/cryptpad/pad/chainpad-netflux.js',
-    '/bower_components/hyperjson/hyperjson.js',
+    '/cryptpad/components/hyperjson/hyperjson.js',
     '/cryptpad/cryptpad/common/toolbar.js',
     '/cryptpad/cryptpad/common/cursor.js',
-    '/bower_components/chainpad-json-validator/json-ot.js',
+    '/cryptpad/components/chainpad-json-validator/json-ot.js',
     '/cryptpad/cryptpad/common/TypingTests.js',
     'json.sortify',
-    '/bower_components/textpatcher/TextPatcher.amd.js',
+    '/cryptpad/components/textpatcher/TextPatcher.amd.js',
     '/cryptpad/cryptpad/common/cryptpad-common.js',
     '/cryptpad/cryptpad/common/visible.js',
     '/cryptpad/cryptpad/common/notify.js',
     'config',
-    '/bower_components/file-saver/FileSaver.min.js',
-    '/bower_components/diff-dom/diffDOM.js',
-    '/bower_components/jquery/dist/jquery.min.js',
+    '/cryptpad/components/file-saver/FileSaver.min.js',
+    '/cryptpad/components/diff-dom/diffDOM.js',
+    '/cryptpad/components/jquery/dist/jquery.min.js',
 ], function (Messages, Crypto, realtimeInput, Hyperjson,
     Toolbar, Cursor, JsonOT, TypingTest, JSONSortify, TextPatcher, Cryptpad,
     Visible, Notify, Config) {
