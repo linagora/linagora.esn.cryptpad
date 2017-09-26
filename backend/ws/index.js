@@ -43,18 +43,18 @@ function init(dependencies, lib, config) {
         });
     }, 5000);
 
-    wss.on('connection', function(socket) {
+    wss.on('connection', function(socket, req) {
 
         // 0 = ''
         // 1 = websocketPath (normally)
         // 2 = user ID
-        var userId = socket.upgradeReq.url.split('/')[2];
+        var userId = req.url.split('/')[2];
 
         /*if(url[1] !== (config.websocketPath || 'cryptpad_websocket')) { return; }
 
         if(socket.upgradeReq.url.search(/(\/?+){1}/))*/
 
-        const conn = socket.upgradeReq.connection;
+        const conn = req.connection;
 
         const user = {
             addr: conn.remoteAddress + '|' + conn.remotePort,
