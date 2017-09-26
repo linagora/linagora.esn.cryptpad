@@ -62,7 +62,7 @@ function isCoAuthor(chan, userId) {
   var isCoAuthor = false;
 
   chan.coAuthor.forEach(function(user) {
-    if (user._id && user._id === userId) {
+    if (user._id && user._id.toString() === userId) {
       isCoAuthor = true;
     } else if (user === userId) {
       isCoAuthor = true;
@@ -86,7 +86,7 @@ var message = function(env, chanId, msg, cb) {
           cb(err);
         }
       });
-    } else if (!isCoAuthor(chan, msg[1]) && (chan.author._id !== msg[1])) {
+    } else if (!isCoAuthor(chan, msg[1]) && (chan.author._id.toString() !== msg[1])) {
       logger.info(msg[1] + 'start coAuthor on pads : ' + chanId);
       self.lib.pad.insertCoAuthor(msg[1], chanId, function(err) {
         if (err) {
