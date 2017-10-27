@@ -2,7 +2,6 @@ table.table.table-hover
   thead
     tr
       th #{__("Pad's name")}
-      th #{__("Pad's Id")}
       th #{__('Created By')}
       th #{__('CoAuthored By')}
       th #{__('Action')}
@@ -12,7 +11,6 @@ table.table.table-hover
   tbody(ng-if="channels.length != 0")
     tr(ng-repeat="channel in channels")
       td {{channel.name}}
-      td {{channel.channel}}
       td {{channel.author.firstname}} {{channel.author.lastname}}
       td.co-author
         a(ng-repeat="user in channel.coAuthor" href="#/profile/{{user._id}}/details/view")
