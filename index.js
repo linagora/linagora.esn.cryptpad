@@ -5,7 +5,6 @@ let express = require('express');
 let path = require('path');
 let glob = require('glob-all');
 let _ = require('lodash');
-let config = require('./frontend/cryptpad/config/config');
 
 const NAME = 'cryptpad';
 const APP_ENTRY_POINT = NAME + '.app.js';
@@ -64,10 +63,6 @@ let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
       webserverWrapper.addApp(NAME, app);
 
       callback();
-    },
-
-    start: function(dependencies, callback) {
-      require('./backend/ws').init(dependencies, this.lib, config);
     }
   }
 });
