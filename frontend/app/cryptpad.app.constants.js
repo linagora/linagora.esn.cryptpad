@@ -7,7 +7,7 @@
     .constant('CRYPTPAD_MODULE_METADATA', {
       id: 'linagora.esn.cryptpad',
       title: 'Cryptpad',
-      icon: '/cryptpad/images/cryptpad-logo.png',
+      icon: '/cryptpad/images/cryptpad-logo.svg',
       homePage: 'cryptpad',
       config: {
         template: 'cryptpad-config-form',

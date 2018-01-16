@@ -1,0 +1,32 @@
+(function() {
+  'use strict';
+
+  angular.module('linagora.esn.cryptpad')
+    .directive('cryptpadApplicationMenu', cryptpadApplicationMenu);
+
+  function cryptpadApplicationMenu() {
+    var directive = {
+      retrict: 'E',
+      replace: true,
+      controller: 'cryptpadApplicationMenuController',
+      controllerAs: '$ctrl',
+      template:
+<<<<<<< 666f476c763748ad84e979180c3ff49d88206342:frontend/app/components/application-menu.directive.js
+        '<div>' +
+        '<a target="_blank" href="http://localhost:3000">' +
+          '<img class="esn-application-menu-icon" src="/cryptpad/images/cryptpad-logo.svg" />' +
+=======
+      '<div>' +
+        '<a target="_blank" ng-href="{{$ctrl.instanceURL}}">' +
+          '<img class="esn-application-menu-icon" src="/cryptpad/images/cryptpad-logo.png" />' +
+>>>>>>> Fixes #8 Add app menu entry for Cryptpad in OpenPaaS:frontend/app/components/application-menu/application-menu.directive.js
+          '<span class="label" translate>' +
+            'Cryptpad' +
+          '</span>' +
+        '</a>' +
+      '</div>'
+    };
+
+    return directive;
+  }
+})();
