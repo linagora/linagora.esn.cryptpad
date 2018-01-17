@@ -2,11 +2,13 @@
 
 module.exports = function(dependencies) {
 
-  const models = require('./db')(dependencies);
-  const pad = require('./pad')(dependencies);
+  const config = require('./config')(dependencies);
+
+  function register() {
+    config.register();
+  }
 
   return {
-    pad,
-    models
+    register
   };
 };
