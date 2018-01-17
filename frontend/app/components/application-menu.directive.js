@@ -11,7 +11,7 @@
       template:
         '<div>' +
         '<a target="_blank" href="http://localhost:3000">' +
-          '<img class="esn-application-menu-icon" src="/cryptpad/images/cryptpad-logo.png" />' +
+          '<img class="esn-application-menu-icon" src="/cryptpad/images/cryptpad-logo.svg" />' +
           '<span class="label" translate>' +
             'Cryptpad' +
           '</span>' +
