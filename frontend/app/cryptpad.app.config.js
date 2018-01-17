@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('linagora.esn.cryptpad')
-    .config(injectApplicationMenu)
+    .config(injectApplicationMenu);
 
     function injectApplicationMenu(dynamicDirectiveServiceProvider) {
       var cryptpadModule = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'cryptpad-application-menu', {priority: 28});

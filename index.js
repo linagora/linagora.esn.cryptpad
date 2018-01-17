@@ -56,14 +56,18 @@ let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
       frontendModules = [APP_ENTRY_POINT].concat(frontendModules);
 
       app.use('/api', this.api.cryptpad);
-      
+
       webserverWrapper.addApp('bower_components', express.static(path.normalize(__dirname + '/frontend/components/')));
       webserverWrapper.injectAngularAppModules(NAME, frontendModules, MODULE_NAME, ['esn']);
       webserverWrapper.injectLess(NAME, [lessFile], 'esn');
       webserverWrapper.addApp(NAME, app);
 
-      callback();
-    }
+      require('./backend/lib/config')(dependencies).register();
+
+      return callback();
+    },
+
+    start: (dependencies, callback) => callback()
   }
 });
 
