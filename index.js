@@ -13,31 +13,15 @@ const FRONTEND_JS_PATH = __dirname + '/frontend/app/';
 
 let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
   dependencies: [
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.logger', 'logger'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.auth', 'auth'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.pubsub', 'pubsub'),
     new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.webserver.wrapper', 'webserver-wrapper'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.esn-config', 'esn-config'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.webserver.middleware.authorization', 'authorizationMW'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.webserver.denormalize.user', 'denormalizeUser'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.user', 'user'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.collaboration', 'collaboration'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.webserver.middleware.token', 'tokenMW'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.wsserver', 'wsserver'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.helpers', 'helpers'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.email', 'email'),
-    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.db', 'db')
+    new Dependency(Dependency.TYPE_NAME, 'linagora.esn.core.esn-config', 'esn-config')
   ],
 
   states: {
     lib: function(dependencies, callback) {
       let libModule = require('./backend/lib')(dependencies);
-      let cryptpad = require('./backend/webserver/api')(dependencies, libModule);
 
       let lib = {
-        api: {
-          cryptpad: cryptpad
-        },
         lib: libModule
       };
 
@@ -54,8 +38,6 @@ let cryptpadModule = new AwesomeModule('linagora.esn.cryptpad', {
 
       _.pull(frontendModules, APP_ENTRY_POINT);
       frontendModules = [APP_ENTRY_POINT].concat(frontendModules);
-
-      app.use('/api', this.api.cryptpad);
 
       webserverWrapper.addApp('bower_components', express.static(path.normalize(__dirname + '/frontend/components/')));
       webserverWrapper.injectAngularAppModules(NAME, frontendModules, MODULE_NAME, ['esn']);
