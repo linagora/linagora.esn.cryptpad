@@ -12,10 +12,10 @@
       controllerAs: '$ctrl',
       template:
       '<div>' +
-        '<a target="_blank" ng-href="{{$ctrl.instanceURL}}">' +
+        '<a target="_blank" ng-href="{{$ctrl.userCryptpadDriveURL}}">' +
           '<img class="esn-application-menu-icon" src="/cryptpad/images/cryptpad-logo.svg" />' +
           '<span class="label" translate>' +
-            'Cryptpad' +
+            '{{$ctrl.appTitle}}' +
           '</span>' +
         '</a>' +
       '</div>'
