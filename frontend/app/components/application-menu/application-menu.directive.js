@@ -10,6 +10,7 @@
       replace: true,
       controller: 'cryptpadApplicationMenuController',
       controllerAs: '$ctrl',
+      scope: true,
       template:
       '<div>' +
         '<a target="_blank" ng-href="{{$ctrl.userCryptpadDriveURL}}">' +

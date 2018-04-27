@@ -5,7 +5,7 @@
     .config(injectApplicationMenu);
 
     function injectApplicationMenu(dynamicDirectiveServiceProvider) {
-      var cryptpadModule = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'cryptpad-application-menu', {priority: 28});
+      var cryptpadModule = new dynamicDirectiveServiceProvider.DynamicDirective(true, 'cryptpad-application-menu', {priority: -10});
 
       dynamicDirectiveServiceProvider.addInjection('esn-application-menu', cryptpadModule);
     }
