@@ -15,19 +15,19 @@
     "grunt": "0.4.5",
     "grunt-contrib-jshint": "0.11.3",
     "grunt-eslint": "19.0.0",
-    "grunt-i18n-checker": "git+https://ci.open-paas.org/stash/scm/or/grunt-i18n-checker.git#2b9ea43c15e",
     "grunt-jscs": "2.3.0",
     "grunt-karma": "0.12.1",
     "grunt-lint-pattern": "0.1.4",
     "grunt-mocha-cli": "2.0.0",
     "i18n": "0.8.3",
-    "i18n-checker": "git+https://ci.open-paas.org/stash/scm/or/i18n-checker.git#3539a122a59",
+    "@linagora/grunt-i18n-checker": "2.0.5",
+    "@linagora/karma-ng-jade2module-preprocessor": "0.5.3",
+    "@linagora/i18n-checker": "2.0.3",
     "karma": "0.13.15",
     "karma-chrome-launcher": "0.2.1",
     "karma-coverage": "0.5.3",
     "karma-firefox-launcher": "0.1.6",
     "karma-mocha": "0.2.0",
-    "karma-ng-jade2module-preprocessor": "git+https://ci.open-paas.org/stash/scm/or/karma-ng-jade2module-preprocessor.git",
     "karma-phantomjs-launcher": "0.2.1",
     "karma-spec-reporter": "0.0.22",
     "mocha": "2.3.3",
@@ -37,17 +37,17 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "./node_modules/bower/bin/bower install --allow-root"
+    "postinstall": "bower install --production --allow-root"
   },
   "repository": {
     "type": "git",
-    "url": "https://ci.open-paas.org/stash/scm/om/esn.helloworld.git"
+    "url": "https://ci.linagora.com/linagora/lgs/openpaas/linagora.esn.cryptpad.git"
   },
   "author": "Linagora R&D",
   "license": "AGPLv3",
   "dependencies": {
     "awesome-module": "1.0.0",
-    "bower": "1.8.0",
+    "bower": "1.8.4",
     "express": "4.13.3",
     "glob-all": "^3.1.0",
     "i18n": "0.6.0",
