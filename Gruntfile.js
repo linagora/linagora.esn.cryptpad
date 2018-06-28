@@ -82,7 +82,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha-cli');
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-eslint');
-  grunt.loadNpmTasks('grunt-i18n-checker');
+  grunt.loadNpmTasks('@linagora/grunt-i18n-checker');
 
 grunt.registerTask('i18n', 'Check the translation files', ['i18n_checker']);
   grunt.registerTask('linters', 'Check code for lint', ['eslint:all', 'lint_pattern:all', 'i18n']);
