@@ -14,7 +14,7 @@
         displayIn: {
           user: false,
           domain: true,
-          platform: false
+          platform: true
         }
       }
     })
