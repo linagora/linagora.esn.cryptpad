@@ -1,6 +1,6 @@
 {
   "name": "linagora.esn.cryptpad",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "OpenPaas pads module",
   "main": "index.js",
   "devDependencies": {

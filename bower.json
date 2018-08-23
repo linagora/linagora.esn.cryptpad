@@ -1,7 +1,7 @@
 {
   "name": "esn.helloworld",
   "main": "index.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "authors": [
     "Linagora Folks <openpaas@linagora.com>"
   ],
